@@ -267,7 +267,7 @@
   color: #0a0a0a;
   font-weight: 700;
   transition: all 0.3s ease;
-  font-family: "Golos Text", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 .btn-gold:hover {
   background-position: right center;
@@ -301,4 +301,58 @@
 }
 .faq-item:hover {
   border-bottom-color: rgba(201, 168, 76, 0.3);
+}
+
+/* ============ MOBILE FIXES ============ */
+
+/* Sticky CTA — центрируем на мобиле */
+@media (max-width: 640px) {
+  .sticky-cta {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(201, 168, 76, 0.2);
+  }
+
+  .sticky-cta a {
+    width: 100%;
+    border-radius: 8px !important;
+  }
+
+  /* Отступ снизу — чтобы кнопки не перекрывало содержимое */
+  #root {
+    padding-bottom: 72px;
+  }
+}
+
+/* Скрываем горизонтальный скролл */
+body {
+  overflow-x: hidden;
+}
+
+/* Все контейнеры на мобиле имеют нормальный паддинг */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Тарифные карточки — полная ширина */
+  .glass-card.p-10 {
+    padding: 1.5rem;
+  }
+
+  .glass-card.p-8 {
+    padding: 1.25rem;
+  }
+
+  /* Оверлай карточки на фото — скрываем на очень маленьких */
+  .photo-overlay-card {
+    display: none;
+  }
 }

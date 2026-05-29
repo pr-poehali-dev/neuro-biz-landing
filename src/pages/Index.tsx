@@ -3,27 +3,29 @@ import Icon from '@/components/ui/icon';
 
 const TELEGRAM_URL = 'https://t.me/volshebnitsaa';
 const OKSANA_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/81ae1fdf-b495-4941-8cc8-cb6cfffc52fd.jpg';
+const OKSANA_PHOTO2 = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/609137d0-31bb-43b3-a22e-7f346f04a330.jpg';
 const DMITRY_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/435e1dd3-09d5-45c3-9cb7-abf60ed0f892.JPG';
 
 // Target date: June 4, 2025
 const TARGET_DATE = new Date('2025-06-04T16:00:00');
 
-function useCountdown(target: Date) {
-  const calc = () => {
-    const diff = target.getTime() - Date.now();
-    if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-    return {
-      days: Math.floor(diff / 86400000),
-      hours: Math.floor((diff % 86400000) / 3600000),
-      minutes: Math.floor((diff % 3600000) / 60000),
-      seconds: Math.floor((diff % 60000) / 1000),
-    };
+function calcTimeLeft(target: Date) {
+  const diff = target.getTime() - Date.now();
+  if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+  return {
+    days: Math.floor(diff / 86400000),
+    hours: Math.floor((diff % 86400000) / 3600000),
+    minutes: Math.floor((diff % 3600000) / 60000),
+    seconds: Math.floor((diff % 60000) / 1000),
   };
-  const [time, setTime] = useState(calc);
+}
+
+function useCountdown(target: Date) {
+  const [time, setTime] = useState(() => calcTimeLeft(target));
   useEffect(() => {
-    const t = setInterval(() => setTime(calc()), 1000);
+    const t = setInterval(() => setTime(calcTimeLeft(target)), 1000);
     return () => clearInterval(t);
-  }, []);
+  }, [target]);
   return time;
 }
 
@@ -53,26 +55,26 @@ const CTAButton = ({ children, className = '', size = 'default' }: { children: R
 
 const TimerBlock = ({ value, label }: { value: number; label: string }) => (
   <div className="flex flex-col items-center">
-    <div className="font-display text-5xl md:text-6xl font-light text-gold-gradient tabular-nums min-w-[64px] text-center">
+    <div className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-gold-gradient tabular-nums min-w-[44px] sm:min-w-[56px] md:min-w-[64px] text-center">
       {String(value).padStart(2, '0')}
     </div>
-    <div className="text-xs uppercase tracking-[0.2em] mt-1" style={{ color: 'var(--text-muted)' }}>{label}</div>
+    <div className="text-[10px] sm:text-xs uppercase tracking-[0.15em] mt-1" style={{ color: 'var(--text-muted)' }}>{label}</div>
   </div>
 );
 
 const SectionHeader = ({ eyebrow, title, subtitle }: { eyebrow?: string; title: string; subtitle?: string }) => {
   const { ref, inView } = useInView();
   return (
-    <div ref={ref} className={`text-center mb-16 transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+    <div ref={ref} className={`text-center mb-10 sm:mb-16 transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
       {eyebrow && (
-        <div className="text-xs uppercase tracking-[0.3em] mb-4 font-semibold" style={{ color: 'var(--gold)' }}>{eyebrow}</div>
+        <div className="text-[10px] sm:text-xs uppercase tracking-[0.25em] sm:tracking-[0.3em] mb-3 sm:mb-4 font-semibold" style={{ color: 'var(--gold)' }}>{eyebrow}</div>
       )}
-      <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-light leading-tight mb-5" style={{ color: 'var(--text-main)' }}>
+      <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 sm:mb-5 px-2" style={{ color: 'var(--text-main)' }}>
         {title}
       </h2>
-      <div className="section-divider mb-5" />
+      <div className="section-divider mb-4 sm:mb-5" />
       {subtitle && (
-        <p className="text-lg max-w-2xl mx-auto leading-relaxed" style={{ color: 'var(--text-muted)' }}>{subtitle}</p>
+        <p className="text-base sm:text-lg max-w-2xl mx-auto leading-relaxed px-2" style={{ color: 'var(--text-muted)' }}>{subtitle}</p>
       )}
     </div>
   );
@@ -90,23 +92,42 @@ const HeroSection = () => {
           style={{ background: 'radial-gradient(ellipse at left bottom, rgba(201,168,76,0.5), transparent 70%)' }} />
       </div>
 
-      <div className="container mx-auto px-6 py-24 relative z-10">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+      <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-24 relative z-10">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+          {/* Фото — на мобиле сверху, компактнее */}
+          <div className="order-1 md:order-2 flex justify-center animate-fade-in delay-200">
+            <div className="relative w-full max-w-[280px] sm:max-w-sm md:max-w-md">
+              <div className="absolute -inset-3 rounded-sm opacity-20"
+                style={{ background: 'linear-gradient(135deg, var(--gold) 0%, transparent 60%)' }} />
+              <img
+                src={OKSANA_PHOTO}
+                alt="Оксана Панасенко — ведущая тренинга Перепрошивка"
+                className="relative w-full rounded-sm object-cover object-top"
+                style={{ aspectRatio: '3/4', filter: 'contrast(1.05) saturate(0.9)' }}
+              />
+              <div className="absolute bottom-4 left-4 right-4 glass-card rounded-sm p-3">
+                <div className="font-display text-lg sm:text-xl" style={{ color: 'var(--gold)' }}>Оксана Панасенко</div>
+                <div className="text-xs sm:text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Сертифицированный тренер · Энергокоуч</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Текст */}
           <div className="order-2 md:order-1">
-            <div className="text-xs uppercase tracking-[0.4em] mb-6 font-semibold animate-fade-in" style={{ color: 'var(--gold)' }}>
+            <div className="text-[10px] sm:text-xs uppercase tracking-[0.3em] sm:tracking-[0.4em] mb-4 sm:mb-6 font-semibold animate-fade-in" style={{ color: 'var(--gold)' }}>
               Трансформационный тренинг · Метод Дмитрия Хара
             </div>
-            <h1 className="font-display text-7xl md:text-8xl lg:text-9xl font-bold leading-none mb-6 animate-fade-in-up delay-100" style={{ letterSpacing: '-0.01em' }}>
+            <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-none mb-4 sm:mb-6 animate-fade-in-up delay-100">
               <span className="text-gold-gradient">ПЕРЕ-</span>
               <br />
               <span style={{ color: 'var(--text-main)' }}>ПРОШИВКА</span>
             </h1>
-            <p className="text-xl md:text-2xl font-light leading-relaxed mb-10 animate-fade-in-up delay-200"
+            <p className="text-base sm:text-xl md:text-2xl font-light leading-relaxed mb-6 sm:mb-10 animate-fade-in-up delay-200"
               style={{ color: 'var(--text-muted)', fontStyle: 'italic' }}>
               Глубокие изменения через тело, эмоции и осознанность
             </p>
 
-            <div className="flex flex-wrap gap-6 text-sm mb-10 animate-fade-in-up delay-300">
+            <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-6 text-xs sm:text-sm mb-6 sm:mb-10 animate-fade-in-up delay-300">
               {[
                 { icon: 'Calendar', text: '4–7 июня 2025' },
                 { icon: 'MapPin', text: 'Краснодар' },
@@ -114,47 +135,30 @@ const HeroSection = () => {
                 { icon: 'Star', text: 'Выездной формат' },
               ].map(({ icon, text }) => (
                 <div key={text} className="flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
-                  <Icon name={icon} size={16} style={{ color: 'var(--gold)' }} />
+                  <Icon name={icon} size={14} style={{ color: 'var(--gold)', flexShrink: 0 }} />
                   <span>{text}</span>
                 </div>
               ))}
             </div>
 
-            <div className="mb-10 animate-fade-in-up delay-400">
-              <div className="text-xs uppercase tracking-[0.25em] mb-4" style={{ color: 'var(--text-muted)' }}>До начала тренинга</div>
-              <div className="flex items-center gap-4 md:gap-6">
+            <div className="mb-6 sm:mb-10 animate-fade-in-up delay-400">
+              <div className="text-[10px] sm:text-xs uppercase tracking-[0.2em] mb-3 sm:mb-4" style={{ color: 'var(--text-muted)' }}>До начала тренинга</div>
+              <div className="flex items-center gap-2 sm:gap-4 md:gap-6">
                 <TimerBlock value={time.days} label="дней" />
-                <div className="font-display text-3xl" style={{ color: 'var(--gold)', opacity: 0.5 }}>:</div>
+                <div className="font-display text-xl sm:text-3xl" style={{ color: 'var(--gold)', opacity: 0.5 }}>:</div>
                 <TimerBlock value={time.hours} label="часов" />
-                <div className="font-display text-3xl" style={{ color: 'var(--gold)', opacity: 0.5 }}>:</div>
+                <div className="font-display text-xl sm:text-3xl" style={{ color: 'var(--gold)', opacity: 0.5 }}>:</div>
                 <TimerBlock value={time.minutes} label="минут" />
-                <div className="font-display text-3xl" style={{ color: 'var(--gold)', opacity: 0.5 }}>:</div>
+                <div className="font-display text-xl sm:text-3xl" style={{ color: 'var(--gold)', opacity: 0.5 }}>:</div>
                 <TimerBlock value={time.seconds} label="секунд" />
               </div>
             </div>
 
             <div className="animate-fade-in-up delay-500">
-              <CTAButton size="large" className="animate-pulse-gold">
+              <CTAButton size="large" className="animate-pulse-gold w-full sm:w-auto justify-center">
                 Забронировать место
                 <Icon name="ArrowRight" size={20} />
               </CTAButton>
-            </div>
-          </div>
-
-          <div className="order-1 md:order-2 flex justify-center animate-fade-in delay-200">
-            <div className="relative">
-              <div className="absolute -inset-4 rounded-sm opacity-20"
-                style={{ background: 'linear-gradient(135deg, var(--gold) 0%, transparent 60%)' }} />
-              <img
-                src={OKSANA_PHOTO}
-                alt="Оксана Панасенко — ведущая тренинга Перепрошивка"
-                className="relative w-full max-w-sm md:max-w-md rounded-sm object-cover"
-                style={{ aspectRatio: '3/4', filter: 'contrast(1.05) saturate(0.9)' }}
-              />
-              <div className="absolute bottom-6 left-6 right-6 glass-card rounded-sm p-4">
-                <div className="font-display text-xl" style={{ color: 'var(--gold)' }}>Оксана Панасенко</div>
-                <div className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Сертифицированный тренер · Энергокоуч</div>
-              </div>
             </div>
           </div>
         </div>
@@ -181,13 +185,13 @@ const PainSection = () => {
     'Чувство, что жизнь проходит мимо',
   ];
   return (
-    <section className="py-28" style={{ background: 'var(--dark-bg)' }}>
-      <div className="container mx-auto px-6">
+    <section className="py-16 sm:py-28" style={{ background: 'var(--dark-bg)' }}>
+      <div className="container mx-auto px-4 sm:px-6">
         <SectionHeader
           eyebrow="Точка боли"
           title="Вы уже многое знаете. Но почему жизнь не меняется?"
         />
-        <div ref={ref} className={`grid md:grid-cols-2 gap-8 max-w-4xl mx-auto transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <div ref={ref} className={`grid md:grid-cols-2 gap-5 sm:gap-8 max-w-4xl mx-auto transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="glass-card rounded-sm p-8">
             <div className="text-xs uppercase tracking-[0.25em] mb-6 font-semibold" style={{ color: 'var(--gold)' }}>Уже было</div>
             <ul className="space-y-4">
@@ -273,12 +277,9 @@ const ScenariosSection = () => {
     },
   ];
   return (
-    <section className="py-28" style={{ background: 'var(--dark-card)' }}>
-      <div className="container mx-auto px-6">
-        <SectionHeader
-          eyebrow="Узнайте себя"
-          title="Какой сценарий управляет вашей жизнью?"
-        />
+    <section className="py-16 sm:py-28" style={{ background: 'var(--dark-card)' }}>
+      <div className="container mx-auto px-4 sm:px-6">
+        <SectionHeader eyebrow="Узнайте себя" title="Какой сценарий управляет вашей жизнью?" />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
           {scenarios.map((s, i) => <ScenarioCard key={s.title} title={s.title} behavior={s.behavior} consequence={s.consequence} delay={i * 80} />)}
         </div>
@@ -357,8 +358,8 @@ const WhatIsSection = () => {
     { n: '06', title: 'Интеграция', text: 'Закрепляем изменения и переносим новое состояние в реальную жизнь' },
   ];
   return (
-    <section className="py-28" style={{ background: 'var(--dark-bg)' }}>
-      <div className="container mx-auto px-6">
+    <section className="py-16 sm:py-28" style={{ background: 'var(--dark-bg)' }}>
+      <div className="container mx-auto px-4 sm:px-6">
         <SectionHeader
           eyebrow="Что такое Перепрошивка"
           title="Не лекция. Не теория. Живой опыт."
@@ -406,8 +407,8 @@ const WhyWorksSection = () => {
   ];
   const { ref, inView } = useInView();
   return (
-    <section className="py-28" style={{ background: 'var(--dark-card)' }}>
-      <div className="container mx-auto px-6">
+    <section className="py-16 sm:py-28" style={{ background: 'var(--dark-card)' }}>
+      <div className="container mx-auto px-4 sm:px-6">
         <SectionHeader
           eyebrow="Почему метод работает"
           title="Изменения начинаются не в голове"
@@ -457,8 +458,8 @@ const ResultsSection = () => {
     { before: 'Закрытость', after: 'Открытость', icon: '💝' },
   ];
   return (
-    <section className="py-28" style={{ background: 'var(--dark-bg)' }}>
-      <div className="container mx-auto px-6">
+    <section className="py-16 sm:py-28" style={{ background: 'var(--dark-bg)' }}>
+      <div className="container mx-auto px-4 sm:px-6">
         <SectionHeader
           eyebrow="Результаты участников"
           title="Было → Стало"
@@ -474,18 +475,18 @@ const ResultsSection = () => {
 
 // Block 8: Emotional quote
 const EmotionalSection = () => (
-  <section className="py-28 relative overflow-hidden" style={{ background: 'var(--crimson)', }}>
+  <section className="py-16 sm:py-28 relative overflow-hidden" style={{ background: 'var(--crimson)' }}>
     <div className="absolute inset-0 opacity-20"
       style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.8), transparent)' }} />
-    <div className="container mx-auto px-6 relative z-10 text-center">
-      <div className="font-display text-4xl md:text-6xl lg:text-7xl font-light leading-tight max-w-4xl mx-auto" style={{ color: 'var(--text-main)' }}>
+    <div className="container mx-auto px-4 sm:px-6 relative z-10 text-center">
+      <div className="font-display text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight max-w-4xl mx-auto" style={{ color: 'var(--text-main)' }}>
         Перепрошивку невозможно понять.
         <br />
-        <span style={{ opacity: 0.7 }}>Её можно только</span>{' '}
+        <span style={{ opacity: 0.8 }}>Её можно только</span>{' '}
         <span className="italic">прожить.</span>
       </div>
-      <div className="mt-12">
-        <CTAButton size="large">
+      <div className="mt-8 sm:mt-12">
+        <CTAButton size="large" className="w-full sm:w-auto justify-center">
           Хочу прожить это
           <Icon name="Heart" size={20} />
         </CTAButton>
@@ -496,12 +497,12 @@ const EmotionalSection = () => (
 
 // Block 9: About Dmitry Hara (author of method)
 const AboutDmitrySection = () => (
-  <section className="py-28" style={{ background: 'var(--dark-card)' }}>
-    <div className="container mx-auto px-6">
-      <div className="grid md:grid-cols-2 gap-16 items-center">
+  <section className="py-16 sm:py-28" style={{ background: 'var(--dark-card)' }}>
+    <div className="container mx-auto px-4 sm:px-6">
+      <div className="grid md:grid-cols-2 gap-8 sm:gap-16 items-center">
         <div className="order-2 md:order-1">
-          <div className="text-xs uppercase tracking-[0.3em] font-semibold mb-4" style={{ color: 'var(--gold)' }}>Автор метода</div>
-          <h2 className="font-display text-4xl md:text-5xl font-bold mb-6" style={{ color: 'var(--text-main)' }}>
+          <div className="text-xs uppercase tracking-[0.3em] font-semibold mb-3 sm:mb-4" style={{ color: 'var(--gold)' }}>Автор метода</div>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6" style={{ color: 'var(--text-main)' }}>
             Дмитрий <span className="text-gold-gradient">Хара</span>
           </h2>
           <div className="section-divider mb-8" style={{ marginLeft: 0 }} />
@@ -541,14 +542,14 @@ const AboutDmitrySection = () => (
 
 // Block 10: About Oksana
 const AboutSection = () => (
-  <section className="py-28" style={{ background: 'var(--dark-bg)' }}>
-    <div className="container mx-auto px-6">
-      <div className="grid md:grid-cols-2 gap-16 items-center">
+  <section className="py-16 sm:py-28" style={{ background: 'var(--dark-bg)' }}>
+    <div className="container mx-auto px-4 sm:px-6">
+      <div className="grid md:grid-cols-2 gap-8 sm:gap-16 items-center">
         <div>
           <img
-            src={OKSANA_PHOTO}
+            src={OKSANA_PHOTO2}
             alt="Оксана Панасенко"
-            className="w-full rounded-sm object-cover"
+            className="w-full rounded-sm object-cover object-top"
             style={{ aspectRatio: '3/4', filter: 'saturate(0.9) contrast(1.05)' }}
           />
         </div>
@@ -631,12 +632,9 @@ const CasesSection = () => {
     },
   ];
   return (
-    <section className="py-28" style={{ background: 'var(--dark-card)' }}>
-      <div className="container mx-auto px-6">
-        <SectionHeader
-          eyebrow="Кейсы участников"
-          title="Реальные истории изменений"
-        />
+    <section className="py-16 sm:py-28" style={{ background: 'var(--dark-card)' }}>
+      <div className="container mx-auto px-4 sm:px-6">
+        <SectionHeader eyebrow="Кейсы участников" title="Реальные истории изменений" />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {cases.map((c, i) => <CaseCard key={c.name} name={c.name} before={c.before} insight={c.insight} after={c.after} delay={i * 80} />)}
         </div>
@@ -647,13 +645,10 @@ const CasesSection = () => {
 
 // Block 12: For whom
 const ForWhomSection = () => (
-  <section className="py-28" style={{ background: 'var(--dark-bg)' }}>
-    <div className="container mx-auto px-6">
-      <SectionHeader
-        eyebrow="Кому подходит"
-        title="Перепрошивка — для тех, кто готов"
-      />
-      <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+  <section className="py-16 sm:py-28" style={{ background: 'var(--dark-bg)' }}>
+    <div className="container mx-auto px-4 sm:px-6">
+      <SectionHeader eyebrow="Кому подходит" title="Перепрошивка — для тех, кто готов" />
+      <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
         <div>
           <div className="text-xs uppercase tracking-[0.25em] mb-6 font-semibold" style={{ color: 'var(--gold)' }}>Подходит</div>
           <ul className="space-y-5">
@@ -700,8 +695,8 @@ const ForWhomSection = () => (
 
 // Block 13: Price
 const PriceSection = () => (
-  <section className="py-28" style={{ background: 'var(--dark-card)' }}>
-    <div className="container mx-auto px-6">
+  <section className="py-16 sm:py-28" style={{ background: 'var(--dark-card)' }}>
+    <div className="container mx-auto px-4 sm:px-6">
       <SectionHeader eyebrow="Тарифы" title="Выберите свой формат участия" />
 
       {/* Masterclass standalone */}
@@ -834,14 +829,14 @@ const FAQSection = () => {
     },
   ];
   return (
-    <section className="py-28" style={{ background: 'var(--dark-bg)' }}>
-      <div className="container mx-auto px-6">
+    <section className="py-16 sm:py-28" style={{ background: 'var(--dark-bg)' }}>
+      <div className="container mx-auto px-4 sm:px-6">
         <SectionHeader eyebrow="Вопросы и ответы" title="Частые вопросы" />
         <div className="max-w-3xl mx-auto space-y-0">
           {faqs.map((f, i) => (
-            <div key={i} className="faq-item py-6 cursor-pointer" onClick={() => setOpen(open === i ? null : i)}>
-              <div className="flex items-center justify-between gap-4">
-                <h3 className="font-semibold text-base pr-4" style={{ color: 'var(--text-main)' }}>{f.q}</h3>
+            <div key={i} className="faq-item py-5 sm:py-6 cursor-pointer" onClick={() => setOpen(open === i ? null : i)}>
+              <div className="flex items-center justify-between gap-3 sm:gap-4">
+                <h3 className="font-semibold text-sm sm:text-base pr-2" style={{ color: 'var(--text-main)' }}>{f.q}</h3>
                 <div className="flex-shrink-0 transition-transform duration-300" style={{ transform: open === i ? 'rotate(45deg)' : 'rotate(0deg)' }}>
                   <Icon name="Plus" size={20} style={{ color: 'var(--gold)' }} />
                 </div>
@@ -861,49 +856,49 @@ const FAQSection = () => {
 const FinalSection = () => {
   const time = useCountdown(TARGET_DATE);
   return (
-    <section className="py-32 relative overflow-hidden noise-overlay" style={{
+    <section className="py-20 sm:py-32 relative overflow-hidden noise-overlay" style={{
       background: 'radial-gradient(ellipse at 50% 100%, rgba(155,28,28,0.2), transparent 60%), var(--dark-bg)'
     }}>
-      <div className="container mx-auto px-6 text-center">
+      <div className="container mx-auto px-4 sm:px-6 text-center">
         <div className="max-w-3xl mx-auto">
-          <div className="text-xs uppercase tracking-[0.4em] mb-6 font-semibold" style={{ color: 'var(--gold)' }}>Финальный шаг</div>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-light leading-tight mb-6" style={{ color: 'var(--text-main)' }}>
+          <div className="text-[10px] sm:text-xs uppercase tracking-[0.3em] mb-4 sm:mb-6 font-semibold" style={{ color: 'var(--gold)' }}>Финальный шаг</div>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-5 sm:mb-6" style={{ color: 'var(--text-main)' }}>
             Через год ваша жизнь будет другой.
             <br />
             <span style={{ color: 'var(--text-muted)' }}>Вопрос только в том —</span>
             <br />
             <span className="text-gold-gradient italic">примете ли вы решение сегодня.</span>
           </h2>
-          <div className="section-divider mb-10" />
+          <div className="section-divider mb-6 sm:mb-10" />
 
-          <div className="flex flex-wrap justify-center gap-6 text-sm mb-10">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm mb-6 sm:mb-10">
             {[
               { icon: 'Calendar', text: '4–7 июня 2025' },
               { icon: 'MapPin', text: 'Краснодар' },
               { icon: 'Home', text: 'Вилла Ра Хаус' },
             ].map(({ icon, text }) => (
               <div key={text} className="flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
-                <Icon name={icon} size={16} style={{ color: 'var(--gold)' }} />
+                <Icon name={icon} size={14} style={{ color: 'var(--gold)' }} />
                 <span>{text}</span>
               </div>
             ))}
           </div>
 
-          <div className="flex items-center justify-center gap-4 md:gap-8 mb-12">
+          <div className="flex items-center justify-center gap-2 sm:gap-4 md:gap-8 mb-8 sm:mb-12">
             <TimerBlock value={time.days} label="дней" />
-            <div className="font-display text-3xl" style={{ color: 'var(--gold)', opacity: 0.4 }}>:</div>
+            <div className="font-display text-xl sm:text-3xl" style={{ color: 'var(--gold)', opacity: 0.4 }}>:</div>
             <TimerBlock value={time.hours} label="часов" />
-            <div className="font-display text-3xl" style={{ color: 'var(--gold)', opacity: 0.4 }}>:</div>
+            <div className="font-display text-xl sm:text-3xl" style={{ color: 'var(--gold)', opacity: 0.4 }}>:</div>
             <TimerBlock value={time.minutes} label="минут" />
-            <div className="font-display text-3xl" style={{ color: 'var(--gold)', opacity: 0.4 }}>:</div>
+            <div className="font-display text-xl sm:text-3xl" style={{ color: 'var(--gold)', opacity: 0.4 }}>:</div>
             <TimerBlock value={time.seconds} label="секунд" />
           </div>
 
-          <CTAButton size="large" className="animate-pulse-gold">
+          <CTAButton size="large" className="animate-pulse-gold w-full sm:w-auto justify-center">
             Забронировать место
             <Icon name="ArrowRight" size={22} />
           </CTAButton>
-          <p className="text-sm mt-5" style={{ color: 'var(--text-muted)' }}>
+          <p className="text-xs sm:text-sm mt-4 sm:mt-5" style={{ color: 'var(--text-muted)' }}>
             Нажимая кнопку, вы переходите в Telegram к Оксане
           </p>
         </div>
@@ -936,8 +931,8 @@ const StickyCTA = () => {
         href={TELEGRAM_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="btn-gold flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold shadow-2xl"
-        style={{ boxShadow: '0 8px 32px rgba(201,168,76,0.35)' }}
+        className="btn-gold flex items-center justify-center gap-2 rounded-full px-6 py-3 sm:py-3 text-sm font-bold shadow-2xl"
+        style={{ boxShadow: '0 8px 32px rgba(201,168,76,0.35)', minHeight: 48 }}
       >
         <Icon name="MessageCircle" size={18} />
         Забронировать место
@@ -949,21 +944,21 @@ const StickyCTA = () => {
 // Location block
 const LocationSection = () => (
   <section className="py-20" style={{ background: 'var(--dark-bg)' }}>
-    <div className="container mx-auto px-6">
+    <div className="container mx-auto px-4 sm:px-6">
       <SectionHeader eyebrow="Место проведения" title="Вилла Ра Хаус" subtitle="Ст. Новодмитриевская, ул. Казачья, 3 · Краснодар" />
       <div className="max-w-3xl mx-auto">
         <div className="glass-card rounded-sm overflow-hidden">
           <iframe
             src="https://yandex.ru/map-widget/v1/?text=%D0%A1%D1%82.%20%D0%9D%D0%BE%D0%B2%D0%BE%D0%B4%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B5%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%2C%20%D1%83%D0%BB.%20%D0%9A%D0%B0%D0%B7%D0%B0%D1%87%D1%8C%D1%8F%2C%203&z=15&l=map"
             width="100%"
-            height="350"
+            height="280"
             frameBorder="0"
             title="Вилла Ра Хаус на карте"
             style={{ display: 'block', filter: 'grayscale(0.3) contrast(1.05)' }}
             allowFullScreen
           />
         </div>
-        <div className="grid md:grid-cols-3 gap-4 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-4 sm:mt-6">
           {[
             { icon: 'MapPin', title: 'Адрес', text: 'Ст. Новодмитриевская, ул. Казачья, 3' },
             { icon: 'Waves', title: 'На территории', text: 'Сауна · Бассейн с подогревом' },
