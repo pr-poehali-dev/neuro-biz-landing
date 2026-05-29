@@ -129,7 +129,7 @@ const HeroSection = () => {
 
             <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-6 text-xs sm:text-sm mb-6 sm:mb-10 animate-fade-in-up delay-300">
               {[
-                { icon: 'Calendar', text: '4–7 июня 2025' },
+                { icon: 'Calendar', text: '4–7 июня 2026' },
                 { icon: 'MapPin', text: 'Краснодар' },
                 { icon: 'Home', text: 'Вилла Ра Хаус' },
                 { icon: 'Star', text: 'Выездной формат' },
@@ -706,7 +706,7 @@ const PriceSection = () => (
           <div className="flex-1">
             <div className="text-xs uppercase tracking-[0.25em] mb-2 font-semibold" style={{ color: 'var(--gold)' }}>Отдельный билет</div>
             <h3 className="font-display text-2xl font-bold mb-2" style={{ color: 'var(--text-main)' }}>Мастер-класс «Привычка быть счастливым»</h3>
-            <p className="text-sm mb-3" style={{ color: 'var(--text-muted)' }}>4 июня · четверг · 16:00–21:00 · Краснодар</p>
+            <p className="text-sm mb-3" style={{ color: 'var(--text-muted)' }}>4 июня 2026 · четверг · 16:00–21:00 · Краснодар</p>
             <div className="flex flex-wrap gap-x-6 gap-y-1">
               {[
                 'Как перестать злиться на близких',
@@ -732,7 +732,7 @@ const PriceSection = () => (
         <div className="glass-card rounded-sm p-8 flex flex-col" style={{ border: '1px solid rgba(201,168,76,0.2)' }}>
           <div className="text-xs uppercase tracking-[0.25em] mb-3 font-semibold" style={{ color: 'var(--gold)' }}>Стандарт</div>
           <h3 className="font-display text-3xl font-bold mb-1" style={{ color: 'var(--text-main)' }}>Перепрошивка</h3>
-          <div className="text-sm mb-5" style={{ color: 'var(--text-muted)' }}>Выездной формат · 4 дня · 4–7 июня</div>
+          <div className="text-sm mb-5" style={{ color: 'var(--text-muted)' }}>Выездной формат · 4 дня · 4–7 июня 2026</div>
           <div className="font-display text-6xl font-bold text-gold-gradient mb-1">60 000 ₽</div>
           <div className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
             Предоплата: <span style={{ color: 'var(--gold)' }}>10 000 ₽</span>
@@ -765,7 +765,7 @@ const PriceSection = () => (
             style={{ background: 'var(--gold)', color: '#0A0A0A' }}>ВИП</div>
           <div className="text-xs uppercase tracking-[0.25em] mb-3 font-semibold" style={{ color: 'var(--gold)' }}>Максимум</div>
           <h3 className="font-display text-3xl font-bold mb-1" style={{ color: 'var(--text-main)' }}>Перепрошивка VIP</h3>
-          <div className="text-sm mb-5" style={{ color: 'var(--text-muted)' }}>Выездной формат · 4 дня · 4–7 июня</div>
+          <div className="text-sm mb-5" style={{ color: 'var(--text-muted)' }}>Выездной формат · 4 дня · 4–7 июня 2026</div>
           <div className="font-display text-6xl font-bold text-gold-gradient mb-1">100 000 ₽</div>
           <div className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
             Предоплата: <span style={{ color: 'var(--gold)' }}>20 000 ₽</span>
@@ -873,7 +873,7 @@ const FinalSection = () => {
 
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm mb-6 sm:mb-10">
             {[
-              { icon: 'Calendar', text: '4–7 июня 2025' },
+              { icon: 'Calendar', text: '4–7 июня 2026' },
               { icon: 'MapPin', text: 'Краснодар' },
               { icon: 'Home', text: 'Вилла Ра Хаус' },
             ].map(({ icon, text }) => (
@@ -912,7 +912,7 @@ const Footer = () => (
   <footer className="py-10" style={{ background: 'var(--dark-card)', borderTop: '1px solid rgba(201,168,76,0.1)' }}>
     <div className="container mx-auto px-6 text-center">
       <div className="font-display text-2xl text-gold-gradient mb-2">ПЕРЕПРОШИВКА</div>
-      <p className="text-xs" style={{ color: 'var(--text-muted)' }}>© 2025 Оксана Панасенко · Трансформационный тренинг</p>
+      <p className="text-xs" style={{ color: 'var(--text-muted)' }}>© 2026 Оксана Панасенко · Трансформационный тренинг</p>
     </div>
   </footer>
 );
@@ -962,7 +962,7 @@ const LocationSection = () => (
           {[
             { icon: 'MapPin', title: 'Адрес', text: 'Ст. Новодмитриевская, ул. Казачья, 3' },
             { icon: 'Waves', title: 'На территории', text: 'Сауна · Бассейн с подогревом' },
-            { icon: 'Calendar', title: 'Даты', text: '4–7 июня 2025 · 4 дня' },
+            { icon: 'Calendar', title: 'Даты', text: '4–7 июня 2026 · 4 дня' },
           ].map(({ icon, title, text }) => (
             <div key={title} className="glass-card rounded-sm p-5 flex items-start gap-3">
               <Icon name={icon} size={20} className="flex-shrink-0 mt-0.5" style={{ color: 'var(--gold)' }} />
