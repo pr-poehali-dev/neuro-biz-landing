@@ -68,13 +68,13 @@
     @apply bg-background text-foreground;
     background-color: var(--dark-bg);
     color: var(--text-main);
-    font-family: "Golos Text", sans-serif;
+    font-family: "Montserrat", sans-serif;
   }
 }
 
 /* Typography */
 .font-display {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Oswald", sans-serif;
 }
 
 /* Gold gradient text */

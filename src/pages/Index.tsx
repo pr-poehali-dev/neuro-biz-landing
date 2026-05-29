@@ -2,10 +2,11 @@ import { useState, useEffect, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 
 const TELEGRAM_URL = 'https://t.me/volshebnitsaa';
-const OKSANA_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/files/47689bdb-9e34-4616-badd-21ed11440b5c.jpg';
+const OKSANA_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/81ae1fdf-b495-4941-8cc8-cb6cfffc52fd.jpg';
+const DMITRY_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/435e1dd3-09d5-45c3-9cb7-abf60ed0f892.JPG';
 
-// Target date: July 5, 2025
-const TARGET_DATE = new Date('2025-07-05T10:00:00');
+// Target date: June 4, 2025
+const TARGET_DATE = new Date('2025-06-04T16:00:00');
 
 function useCountdown(target: Date) {
   const calc = () => {
@@ -93,23 +94,24 @@ const HeroSection = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1">
             <div className="text-xs uppercase tracking-[0.4em] mb-6 font-semibold animate-fade-in" style={{ color: 'var(--gold)' }}>
-              Трансформационный тренинг
+              Трансформационный тренинг · Метод Дмитрия Хара
             </div>
-            <h1 className="font-display text-7xl md:text-8xl lg:text-9xl font-light leading-none mb-6 animate-fade-in-up delay-100" style={{ letterSpacing: '-0.02em' }}>
+            <h1 className="font-display text-7xl md:text-8xl lg:text-9xl font-bold leading-none mb-6 animate-fade-in-up delay-100" style={{ letterSpacing: '-0.01em' }}>
               <span className="text-gold-gradient">ПЕРЕ-</span>
               <br />
               <span style={{ color: 'var(--text-main)' }}>ПРОШИВКА</span>
             </h1>
-            <p className="text-xl md:text-2xl font-light leading-relaxed mb-10 animate-fade-in-up delay-200" style={{ color: 'var(--text-muted)', fontFamily: 'Cormorant Garamond, serif', fontStyle: 'italic' }}>
+            <p className="text-xl md:text-2xl font-light leading-relaxed mb-10 animate-fade-in-up delay-200"
+              style={{ color: 'var(--text-muted)', fontStyle: 'italic' }}>
               Глубокие изменения через тело, эмоции и осознанность
             </p>
 
             <div className="flex flex-wrap gap-6 text-sm mb-10 animate-fade-in-up delay-300">
               {[
-                { icon: 'Calendar', text: '5 июля 2025' },
-                { icon: 'MapPin', text: 'Москва' },
-                { icon: 'Users', text: 'Только 15 мест' },
-                { icon: 'Star', text: 'Живой офлайн' },
+                { icon: 'Calendar', text: '4–7 июня 2025' },
+                { icon: 'MapPin', text: 'Краснодар' },
+                { icon: 'Home', text: 'Вилла Ра Хаус' },
+                { icon: 'Star', text: 'Выездной формат' },
               ].map(({ icon, text }) => (
                 <div key={text} className="flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
                   <Icon name={icon} size={16} style={{ color: 'var(--gold)' }} />
@@ -151,7 +153,7 @@ const HeroSection = () => {
               />
               <div className="absolute bottom-6 left-6 right-6 glass-card rounded-sm p-4">
                 <div className="font-display text-xl" style={{ color: 'var(--gold)' }}>Оксана Панасенко</div>
-                <div className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Сертифицированный тренер · 8 лет практики</div>
+                <div className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Сертифицированный тренер · Энергокоуч</div>
               </div>
             </div>
           </div>
@@ -492,39 +494,92 @@ const EmotionalSection = () => (
   </section>
 );
 
-// Block 9: About Oksana
+// Block 9: About Dmitry Hara (author of method)
+const AboutDmitrySection = () => (
+  <section className="py-28" style={{ background: 'var(--dark-card)' }}>
+    <div className="container mx-auto px-6">
+      <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="order-2 md:order-1">
+          <div className="text-xs uppercase tracking-[0.3em] font-semibold mb-4" style={{ color: 'var(--gold)' }}>Автор метода</div>
+          <h2 className="font-display text-4xl md:text-5xl font-bold mb-6" style={{ color: 'var(--text-main)' }}>
+            Дмитрий <span className="text-gold-gradient">Хара</span>
+          </h2>
+          <div className="section-divider mb-8" style={{ marginLeft: 0 }} />
+          <div className="space-y-4 mb-8">
+            {[
+              { icon: '📖', text: 'Автор бестселлера «Перепрошивка. Новая жизнь»' },
+              { icon: '🎯', text: 'Автор трансформационного тренинга «Перепрошивка»' },
+              { icon: '🌀', text: 'Автор практики ШОДХАН' },
+            ].map(({ icon, text }) => (
+              <div key={text} className="flex items-start gap-4 glass-card rounded-sm p-4">
+                <span className="text-2xl flex-shrink-0">{icon}</span>
+                <span className="text-base" style={{ color: 'var(--text-main)' }}>{text}</span>
+              </div>
+            ))}
+          </div>
+          <div className="space-y-4 text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+            <p>Дмитрий Хара создал уникальный метод работы с глубинными программами человека — через тело, эмоции и осознанность.</p>
+            <p>Метод «Перепрошивка» прошли тысячи людей по всему миру. <span style={{ color: 'var(--text-main)' }}>Это не теория — это живая практика изменений.</span></p>
+          </div>
+        </div>
+        <div className="order-1 md:order-2">
+          <div className="relative">
+            <div className="absolute -inset-4 rounded-sm opacity-10"
+              style={{ background: 'linear-gradient(135deg, var(--gold) 0%, transparent 60%)' }} />
+            <img
+              src={DMITRY_PHOTO}
+              alt="Дмитрий Хара — автор метода Перепрошивка"
+              className="relative w-full rounded-sm object-cover"
+              style={{ aspectRatio: '3/4', filter: 'contrast(1.02) saturate(0.95)' }}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+// Block 10: About Oksana
 const AboutSection = () => (
   <section className="py-28" style={{ background: 'var(--dark-bg)' }}>
     <div className="container mx-auto px-6">
-      <div className="grid md:grid-cols-2 gap-16 items-start">
+      <div className="grid md:grid-cols-2 gap-16 items-center">
         <div>
           <img
             src={OKSANA_PHOTO}
             alt="Оксана Панасенко"
             className="w-full rounded-sm object-cover"
-            style={{ aspectRatio: '4/5', filter: 'saturate(0.85) contrast(1.1)' }}
+            style={{ aspectRatio: '3/4', filter: 'saturate(0.9) contrast(1.05)' }}
           />
         </div>
         <div>
           <div className="text-xs uppercase tracking-[0.3em] font-semibold mb-4" style={{ color: 'var(--gold)' }}>Ведущая тренинга</div>
-          <h2 className="font-display text-4xl md:text-5xl font-light mb-6" style={{ color: 'var(--text-main)' }}>
+          <h2 className="font-display text-4xl md:text-5xl font-bold mb-3" style={{ color: 'var(--text-main)' }}>
             Оксана <span className="text-gold-gradient">Панасенко</span>
           </h2>
-          <div className="section-divider mb-8" style={{ marginLeft: 0 }} />
-          <div className="space-y-5 text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-            <p>Когда-то я тоже была в точке, где всё «правильно», но ничего не менялось. Читала книги, ходила на тренинги, «работала над собой». И оставалась в том же круге.</p>
-            <p>Перелом случился, когда я поняла: <span style={{ color: 'var(--text-main)' }}>проблема живёт не в голове — она живёт в теле и в состоянии.</span></p>
-            <p>Я прошла путь глубокой трансформации и создала метод, который работает там, где слова бессильны — через прямой опыт изменений.</p>
+          <div className="section-divider mb-6" style={{ marginLeft: 0 }} />
+          <div className="flex flex-wrap gap-2 mb-6">
+            {['Сертифицированный тренер', 'Энергокоуч', 'Автор практик', 'Инструктор практики ШОДХАН'].map(tag => (
+              <span key={tag} className="text-xs px-3 py-1 rounded-sm"
+                style={{ background: 'rgba(201,168,76,0.1)', border: '1px solid rgba(201,168,76,0.25)', color: 'var(--gold)' }}>
+                {tag}
+              </span>
+            ))}
           </div>
-          <div className="grid grid-cols-2 gap-4 mt-10">
+          <div className="space-y-4 text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+            <p>Оксана прошла путь глубокой личной трансформации и стала сертифицированным тренером метода Дмитрия Хара.</p>
+            <p>Она ведёт практику ШОДХАН и авторские энергетические практики, <span style={{ color: 'var(--text-main)' }}>помогая людям находить ресурс там, где они перестали его искать.</span></p>
+            <p>Тренинг в Краснодаре — это живое пространство трансформации, которое Оксана создаёт для каждого участника.</p>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mt-8">
             {[
-              { num: '8+', label: 'лет практики' },
-              { num: '500+', label: 'участников тренингов' },
-              { num: '12', label: 'сертификатов' },
-              { num: '50+', label: 'групп трансформации' },
+              { num: '500+', label: 'участников' },
+              { num: '3+', label: 'года практики' },
+              { num: '50+', label: 'групп' },
+              { num: '4', label: 'авторские практики' },
             ].map(({ num, label }) => (
               <div key={label} className="glass-card rounded-sm p-5 text-center">
-                <div className="font-display text-4xl font-light text-gold-gradient">{num}</div>
+                <div className="font-display text-4xl font-bold text-gold-gradient">{num}</div>
                 <div className="text-xs uppercase tracking-[0.15em] mt-1" style={{ color: 'var(--text-muted)' }}>{label}</div>
               </div>
             ))}
@@ -647,51 +702,102 @@ const ForWhomSection = () => (
 const PriceSection = () => (
   <section className="py-28" style={{ background: 'var(--dark-card)' }}>
     <div className="container mx-auto px-6">
-      <SectionHeader
-        eyebrow="Стоимость"
-        title="Инвестиция в изменения"
-      />
-      <div className="max-w-2xl mx-auto">
-        <div className="glass-card rounded-sm p-10 text-center" style={{ border: '1px solid rgba(201,168,76,0.3)' }}>
-          <div className="text-sm uppercase tracking-[0.3em] mb-3" style={{ color: 'var(--text-muted)' }}>Полная стоимость</div>
-          <div className="font-display text-7xl font-light text-gold-gradient mb-2">25 000 ₽</div>
-          <div className="text-sm mb-8" style={{ color: 'var(--text-muted)' }}>Предоплата для бронирования: <span style={{ color: 'var(--gold)' }}>5 000 ₽</span></div>
+      <SectionHeader eyebrow="Тарифы" title="Выберите свой формат участия" />
 
-          <div className="section-divider mb-8" />
-
-          <div className="text-left space-y-3 mb-8">
-            <div className="text-xs uppercase tracking-[0.25em] mb-4 font-semibold text-center" style={{ color: 'var(--gold)' }}>Что входит</div>
-            {[
-              '2 дня интенсивной трансформационной работы',
-              'Индивидуальная обратная связь от Оксаны',
-              'Материалы и рабочая тетрадь тренинга',
-              'Поддержка в закрытом чате 30 дней после',
-              'Сертификат участника',
-            ].map(t => (
-              <div key={t} className="flex items-center gap-3">
-                <Icon name="Check" size={16} style={{ color: 'var(--gold)' }} />
-                <span className="text-sm" style={{ color: 'var(--text-main)' }}>{t}</span>
-              </div>
-            ))}
-          </div>
-
-          <div className="rounded-sm p-5 mb-8" style={{ background: 'rgba(201,168,76,0.06)', border: '1px solid rgba(201,168,76,0.15)' }}>
-            <div className="text-xs uppercase tracking-[0.25em] mb-3 font-semibold" style={{ color: 'var(--gold)' }}>Бонусы</div>
-            <div className="space-y-2">
-              {['Медитация "Перезагрузка" в подарок', 'Видеозапись вводного вебинара', 'Доступ к закрытому сообществу выпускников'].map(b => (
-                <div key={b} className="flex items-center gap-2">
-                  <span style={{ color: 'var(--gold)' }}>✦</span>
-                  <span className="text-sm" style={{ color: 'var(--text-muted)' }}>{b}</span>
+      {/* Masterclass standalone */}
+      <div className="max-w-3xl mx-auto mb-8">
+        <div className="rounded-sm p-8 flex flex-col md:flex-row md:items-center gap-6 justify-between"
+          style={{ background: 'rgba(201,168,76,0.06)', border: '1px solid rgba(201,168,76,0.2)' }}>
+          <div className="flex-1">
+            <div className="text-xs uppercase tracking-[0.25em] mb-2 font-semibold" style={{ color: 'var(--gold)' }}>Отдельный билет</div>
+            <h3 className="font-display text-2xl font-bold mb-2" style={{ color: 'var(--text-main)' }}>Мастер-класс «Привычка быть счастливым»</h3>
+            <p className="text-sm mb-3" style={{ color: 'var(--text-muted)' }}>4 июня · четверг · 16:00–21:00 · Краснодар</p>
+            <div className="flex flex-wrap gap-x-6 gap-y-1">
+              {[
+                'Как перестать злиться на близких',
+                'Как избавиться от стресса в теле',
+                'Как сделать радость ежедневной привычкой',
+              ].map(t => (
+                <div key={t} className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-muted)' }}>
+                  <span style={{ color: 'var(--gold)' }}>·</span> {t}
                 </div>
               ))}
             </div>
           </div>
+          <div className="flex flex-col items-center gap-3 flex-shrink-0">
+            <div className="font-display text-5xl font-bold text-gold-gradient">5 000 ₽</div>
+            <CTAButton>Записаться</CTAButton>
+          </div>
+        </div>
+      </div>
 
+      {/* Main tariffs */}
+      <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+        {/* Standard */}
+        <div className="glass-card rounded-sm p-8 flex flex-col" style={{ border: '1px solid rgba(201,168,76,0.2)' }}>
+          <div className="text-xs uppercase tracking-[0.25em] mb-3 font-semibold" style={{ color: 'var(--gold)' }}>Стандарт</div>
+          <h3 className="font-display text-3xl font-bold mb-1" style={{ color: 'var(--text-main)' }}>Перепрошивка</h3>
+          <div className="text-sm mb-5" style={{ color: 'var(--text-muted)' }}>Выездной формат · 4 дня · 4–7 июня</div>
+          <div className="font-display text-6xl font-bold text-gold-gradient mb-1">60 000 ₽</div>
+          <div className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
+            Предоплата: <span style={{ color: 'var(--gold)' }}>10 000 ₽</span>
+            <span className="ml-3 text-xs">· Питание и проживание +10 000 ₽</span>
+          </div>
+          <div className="section-divider mb-6" style={{ marginLeft: 0 }} />
+          <div className="space-y-3 flex-1 mb-8">
+            {[
+              'Мастер-класс «Привычка быть счастливым»',
+              'Тренинг ПереПроШивка (полный)',
+              'Раздаточный материал',
+              'Пользование сауной и бассейном с подогревом',
+            ].map(t => (
+              <div key={t} className="flex items-start gap-3">
+                <Icon name="Check" size={16} className="flex-shrink-0 mt-0.5" style={{ color: 'var(--gold)' }} />
+                <span className="text-sm" style={{ color: 'var(--text-main)' }}>{t}</span>
+              </div>
+            ))}
+          </div>
           <CTAButton size="large" className="w-full justify-center">
-            Забронировать место
-            <Icon name="ArrowRight" size={20} />
+            Забронировать
+            <Icon name="ArrowRight" size={18} />
           </CTAButton>
-          <p className="text-xs mt-4" style={{ color: 'var(--text-muted)' }}>Осталось 15 мест · Предоплата фиксирует место</p>
+        </div>
+
+        {/* VIP */}
+        <div className="rounded-sm p-8 flex flex-col relative overflow-hidden"
+          style={{ background: 'linear-gradient(135deg, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.04) 100%)', border: '1px solid rgba(201,168,76,0.5)' }}>
+          <div className="absolute top-4 right-4 text-xs font-bold px-3 py-1 rounded-sm"
+            style={{ background: 'var(--gold)', color: '#0A0A0A' }}>ВИП</div>
+          <div className="text-xs uppercase tracking-[0.25em] mb-3 font-semibold" style={{ color: 'var(--gold)' }}>Максимум</div>
+          <h3 className="font-display text-3xl font-bold mb-1" style={{ color: 'var(--text-main)' }}>Перепрошивка VIP</h3>
+          <div className="text-sm mb-5" style={{ color: 'var(--text-muted)' }}>Выездной формат · 4 дня · 4–7 июня</div>
+          <div className="font-display text-6xl font-bold text-gold-gradient mb-1">100 000 ₽</div>
+          <div className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
+            Предоплата: <span style={{ color: 'var(--gold)' }}>20 000 ₽</span>
+            <span className="ml-3 text-xs">· Питание и проживание +10 000 ₽</span>
+          </div>
+          <div className="section-divider mb-6" style={{ marginLeft: 0 }} />
+          <div className="space-y-3 flex-1 mb-8">
+            {[
+              'Мастер-класс «Привычка быть счастливым»',
+              'Тренинг ПереПроШивка (полный)',
+              'Раздаточный материал',
+              'Подарочный мерч + книга Дмитрия Хара «Перепрошивка»',
+              'Пользование сауной и бассейном с подогревом',
+              'Трансфер из Краснодара до места проведения',
+              'Месячное сопровождение тренера (4 индивидуальные сессии)',
+              'Расчёт индивидуальной Матрицы Судьбы',
+            ].map(t => (
+              <div key={t} className="flex items-start gap-3">
+                <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--gold)' }}>✦</span>
+                <span className="text-sm" style={{ color: 'var(--text-main)' }}>{t}</span>
+              </div>
+            ))}
+          </div>
+          <CTAButton size="large" className="w-full justify-center animate-pulse-gold">
+            Забронировать VIP
+            <Icon name="ArrowRight" size={18} />
+          </CTAButton>
         </div>
       </div>
     </div>
@@ -772,9 +878,9 @@ const FinalSection = () => {
 
           <div className="flex flex-wrap justify-center gap-6 text-sm mb-10">
             {[
-              { icon: 'Calendar', text: '5 июля 2025' },
-              { icon: 'MapPin', text: 'Москва' },
-              { icon: 'Users', text: 'Только 15 мест' },
+              { icon: 'Calendar', text: '4–7 июня 2025' },
+              { icon: 'MapPin', text: 'Краснодар' },
+              { icon: 'Home', text: 'Вилла Ра Хаус' },
             ].map(({ icon, text }) => (
               <div key={text} className="flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
                 <Icon name={icon} size={16} style={{ color: 'var(--gold)' }} />
@@ -840,9 +946,46 @@ const StickyCTA = () => {
   );
 };
 
+// Location block
+const LocationSection = () => (
+  <section className="py-20" style={{ background: 'var(--dark-bg)' }}>
+    <div className="container mx-auto px-6">
+      <SectionHeader eyebrow="Место проведения" title="Вилла Ра Хаус" subtitle="Ст. Новодмитриевская, ул. Казачья, 3 · Краснодар" />
+      <div className="max-w-3xl mx-auto">
+        <div className="glass-card rounded-sm overflow-hidden">
+          <iframe
+            src="https://yandex.ru/map-widget/v1/?text=%D0%A1%D1%82.%20%D0%9D%D0%BE%D0%B2%D0%BE%D0%B4%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B5%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%2C%20%D1%83%D0%BB.%20%D0%9A%D0%B0%D0%B7%D0%B0%D1%87%D1%8C%D1%8F%2C%203&z=15&l=map"
+            width="100%"
+            height="350"
+            frameBorder="0"
+            title="Вилла Ра Хаус на карте"
+            style={{ display: 'block', filter: 'grayscale(0.3) contrast(1.05)' }}
+            allowFullScreen
+          />
+        </div>
+        <div className="grid md:grid-cols-3 gap-4 mt-6">
+          {[
+            { icon: 'MapPin', title: 'Адрес', text: 'Ст. Новодмитриевская, ул. Казачья, 3' },
+            { icon: 'Waves', title: 'На территории', text: 'Сауна · Бассейн с подогревом' },
+            { icon: 'Calendar', title: 'Даты', text: '4–7 июня 2025 · 4 дня' },
+          ].map(({ icon, title, text }) => (
+            <div key={title} className="glass-card rounded-sm p-5 flex items-start gap-3">
+              <Icon name={icon} size={20} className="flex-shrink-0 mt-0.5" style={{ color: 'var(--gold)' }} />
+              <div>
+                <div className="font-semibold text-sm mb-1" style={{ color: 'var(--gold)' }}>{title}</div>
+                <div className="text-sm" style={{ color: 'var(--text-muted)' }}>{text}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 export default function Index() {
   return (
-    <div className="min-h-screen" style={{ fontFamily: 'Golos Text, sans-serif', background: 'var(--dark-bg)' }}>
+    <div className="min-h-screen" style={{ fontFamily: 'Montserrat, sans-serif', background: 'var(--dark-bg)' }}>
       <HeroSection />
       <PainSection />
       <ScenariosSection />
@@ -850,9 +993,11 @@ export default function Index() {
       <WhyWorksSection />
       <ResultsSection />
       <EmotionalSection />
+      <AboutDmitrySection />
       <AboutSection />
       <CasesSection />
       <ForWhomSection />
+      <LocationSection />
       <PriceSection />
       <FAQSection />
       <FinalSection />
