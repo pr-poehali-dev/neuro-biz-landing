@@ -6,8 +6,8 @@ const OKSANA_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7
 const OKSANA_PHOTO2 = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/609137d0-31bb-43b3-a22e-7f346f04a330.jpg';
 const DMITRY_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/435e1dd3-09d5-45c3-9cb7-abf60ed0f892.JPG';
 
-// Target date: June 4, 2025
-const TARGET_DATE = new Date('2025-06-04T16:00:00');
+// Target date: June 4, 2026
+const TARGET_DATE = new Date('2026-06-04T16:00:00');
 
 function calcTimeLeft(target: Date) {
   const diff = target.getTime() - Date.now();
