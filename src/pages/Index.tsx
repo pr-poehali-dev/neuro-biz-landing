@@ -32,7 +32,7 @@ const Navbar = () => {
         <div className="hidden xl:flex items-center gap-1 flex-wrap">
           {NAV_LINKS.map(l => (
             <button key={l.href} onClick={() => handleClick(l.href)}
-              className="text-xs px-2 py-1.5 rounded transition-colors hover:text-yellow-400 whitespace-nowrap"
+              className="text-sm font-bold px-3 py-2 rounded-sm uppercase tracking-wide whitespace-nowrap transition-all duration-200 hover:text-yellow-400 hover:bg-yellow-400/10"
               style={{ color: 'var(--text-muted)' }}>
               {l.label}
             </button>
@@ -70,7 +70,7 @@ const Navbar = () => {
 };
 
 const TELEGRAM_URL = 'https://t.me/volshebnitsaa';
-const OKSANA_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/81ae1fdf-b495-4941-8cc8-cb6cfffc52fd.jpg';
+const OKSANA_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/a706df3c-0cc6-4e6a-b94a-9a103b85b4e7.jpg';
 const OKSANA_PHOTO2 = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/89d43649-e02d-4a5c-b6a4-75108ef3f1e4.png';
 const DMITRY_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/435e1dd3-09d5-45c3-9cb7-abf60ed0f892.JPG';
 
