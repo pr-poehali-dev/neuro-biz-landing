@@ -2,16 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 
 const NAV_LINKS = [
-  { label: 'Сценарии', href: '#scenarios' },
-  { label: 'Что такое Перепрошивка?', href: '#what-is' },
-  { label: 'Как проходит тренинг', href: '#how-it-goes' },
-  { label: 'Автор тренинга', href: '#author' },
-  { label: 'Ведущая тренинга', href: '#trainer' },
-  { label: 'Кейсы и отзывы', href: '#cases' },
+  { label: 'Что такое Перепрошивка', href: '#what-is' },
+  { label: 'Автор', href: '#author' },
+  { label: 'Ведущая', href: '#trainer' },
+  { label: 'Отзывы', href: '#cases' },
   { label: 'Для кого', href: '#for-whom' },
   { label: 'Тарифы', href: '#prices' },
-  { label: 'Вопросы и ответы', href: '#faq' },
-  { label: 'Контакты', href: '#contacts' },
 ];
 
 const Navbar = () => {
