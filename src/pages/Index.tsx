@@ -674,8 +674,8 @@ const AboutSection = () => (
 );
 
 const RUTUBE_REELS = [
-  { id: '37e49f403c08f385fa59ef1c4ad7e7de', thumb: 'https://rutube.ru/api/video/37e49f403c08f385fa59ef1c4ad7e7de/thumbnail/' },
-  { id: 'fbb8d0c1592243fd2ae3b2e7235647ae', thumb: 'https://rutube.ru/api/video/fbb8d0c1592243fd2ae3b2e7235647ae/thumbnail/' },
+  { id: '37e49f403c08f385fa59ef1c4ad7e7de', label: 'Видео 1' },
+  { id: 'fbb8d0c1592243fd2ae3b2e7235647ae', label: 'Видео 2' },
 ];
 
 const ReelsSection = () => (
@@ -688,7 +688,7 @@ const ReelsSection = () => (
       <div className="flex justify-center gap-4 sm:gap-8">
         {RUTUBE_REELS.map(v => (
           <div key={v.id} className="w-full max-w-[260px]">
-            <VideoReviewCard id={v.id} thumb={v.thumb} />
+            <VideoReviewCard id={v.id} />
           </div>
         ))}
       </div>
@@ -697,16 +697,16 @@ const ReelsSection = () => (
 );
 
 const RUTUBE_REVIEWS = [
-  { id: '8ebf651a2a02efc2fe365e0e39c3acd1', thumb: 'https://rutube.ru/api/video/8ebf651a2a02efc2fe365e0e39c3acd1/thumbnail/' },
-  { id: '6716da385323f48fe40630ef02138961', thumb: 'https://rutube.ru/api/video/6716da385323f48fe40630ef02138961/thumbnail/' },
-  { id: '22bcabce7d9f0982bccf900ae4f8798f', thumb: 'https://rutube.ru/api/video/22bcabce7d9f0982bccf900ae4f8798f/thumbnail/' },
-  { id: '1a5adfb2b80d05c7f37d79230f295789', thumb: 'https://rutube.ru/api/video/1a5adfb2b80d05c7f37d79230f295789/thumbnail/' },
+  { id: '8ebf651a2a02efc2fe365e0e39c3acd1' },
+  { id: '6716da385323f48fe40630ef02138961' },
+  { id: '22bcabce7d9f0982bccf900ae4f8798f' },
+  { id: '1a5adfb2b80d05c7f37d79230f295789' },
 ];
 
-const VideoReviewCard = ({ id, thumb }: { id: string; thumb: string }) => {
+const VideoReviewCard = ({ id }: { id: string }) => {
   const [playing, setPlaying] = useState(false);
   return (
-    <div className="glass-card rounded-sm overflow-hidden" style={{ aspectRatio: '9/16' }}>
+    <div className="rounded-sm overflow-hidden" style={{ aspectRatio: '9/16', background: 'var(--dark-card)', border: '1px solid rgba(201,168,76,0.15)' }}>
       {playing ? (
         <iframe
           src={`https://rutube.ru/play/embed/${id}?autoplay=1`}
@@ -716,15 +716,12 @@ const VideoReviewCard = ({ id, thumb }: { id: string; thumb: string }) => {
           style={{ border: 'none', display: 'block', width: '100%', height: '100%' }}
         />
       ) : (
-        <button className="relative w-full h-full group" onClick={() => setPlaying(true)}>
-          <img src={thumb} alt="Видеоотзыв" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 flex items-center justify-center"
-            style={{ background: 'rgba(10,8,6,0.45)' }}>
-            <div className="w-16 h-16 rounded-full flex items-center justify-center transition-transform group-hover:scale-110"
-              style={{ background: 'rgba(201,168,76,0.9)' }}>
-              <Icon name="Play" size={28} style={{ color: '#0a0806', marginLeft: 3 }} />
-            </div>
+        <button className="relative w-full h-full group flex flex-col items-center justify-center gap-4" onClick={() => setPlaying(true)}>
+          <div className="w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+            style={{ background: 'rgba(201,168,76,0.9)', boxShadow: '0 0 30px rgba(201,168,76,0.3)' }}>
+            <Icon name="Play" size={28} style={{ color: '#0a0806', marginLeft: 3 }} />
           </div>
+          <span className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'var(--text-muted)' }}>Смотреть отзыв</span>
         </button>
       )}
     </div>
@@ -783,7 +780,7 @@ const CasesSection = () => {
           <h3 className="font-display text-2xl md:text-3xl font-light" style={{ color: 'var(--text-main)' }}>Участники говорят сами</h3>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-          {RUTUBE_REVIEWS.map(v => <VideoReviewCard key={v.id} id={v.id} thumb={v.thumb} />)}
+          {RUTUBE_REVIEWS.map(v => <VideoReviewCard key={v.id} id={v.id} />)}
         </div>
       </div>
     </section>
@@ -1171,7 +1168,7 @@ const Footer = () => (
         <p>Мы используем методы, основанные на телесной работе, дыхании, движении, фокусе внимания и коммуникации, направленные на развитие навыков саморегуляции и осознанности.</p>
         <p>
           Участие осуществляется по{' '}
-          <a href="/dogovor-oferta.pdf" target="_blank" rel="noopener noreferrer"
+          <a href="https://docs.yandex.ru/docs/view?url=ya-disk-public%3A%2F%2Fb1I5K1Ij9wIh%2BkLpNEEnuaG0hoHKQkqjRnqca2GgLY5cvS50tdyU8CAelMLUd4w6q%2FJ6bpmRyOJonT3VoXnDag%3D%3D%3A%2F%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D1%87%D0%BD%D0%B0%D1%8F%20%D0%BE%D1%84%D0%B5%D1%80%D1%82%D0%B0%2F14_3_2025_%D0%9F%D1%83%D0%B1%D0%BB%D0%B8%D1%87%D0%BD%D0%B0%D1%8F_%D0%BE%D1%84%D0%B5%D1%80%D1%82%D0%B0_.pdf&name=14_3_2025_%D0%9F%D1%83%D0%B1%D0%BB%D0%B8%D1%87%D0%BD%D0%B0%D1%8F_%D0%BE%D1%84%D0%B5%D1%80%D1%82%D0%B0_.pdf" target="_blank" rel="noopener noreferrer"
             className="underline hover:opacity-80 transition-opacity" style={{ color: 'var(--gold)' }}>
             договору-оферте
           </a>
