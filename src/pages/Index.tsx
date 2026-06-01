@@ -75,7 +75,7 @@ const Navbar = () => {
 
 const TELEGRAM_URL = 'https://t.me/volshebnitsaa';
 const OKSANA_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/81ae1fdf-b495-4941-8cc8-cb6cfffc52fd.jpg';
-const OKSANA_PHOTO2 = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/609137d0-31bb-43b3-a22e-7f346f04a330.jpg';
+const OKSANA_PHOTO2 = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/89d43649-e02d-4a5c-b6a4-75108ef3f1e4.png';
 const DMITRY_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/435e1dd3-09d5-45c3-9cb7-abf60ed0f892.JPG';
 
 // Target date: June 4, 2026
