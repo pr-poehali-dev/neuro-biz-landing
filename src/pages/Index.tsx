@@ -168,7 +168,7 @@ const HeroSection = () => {
               <div className="absolute -inset-3 rounded-sm opacity-20"
                 style={{ background: 'linear-gradient(135deg, var(--gold) 0%, transparent 60%)' }} />
               <img
-                src={OKSANA_PHOTO2}
+                src="https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/6ba9fb56-22b1-4ae9-8730-9ef5750fedff.png"
                 alt="Оксана Панасенко — ведущая тренинга Перепрошивка"
                 className="relative w-full rounded-sm object-cover object-top"
                 style={{ aspectRatio: '3/4', filter: 'contrast(1.05) saturate(0.9)' }}
@@ -1066,18 +1066,17 @@ const ContactsSection = () => (
             </div>
           </a>
 
-          {/* WhatsApp Макс */}
-          <a href="https://wa.me/79064347978" target="_blank" rel="noopener noreferrer"
-            className="glass-card rounded-sm p-5 flex items-center gap-4 hover:opacity-80 transition-opacity">
+          {/* МАКС соцсеть */}
+          <div className="glass-card rounded-sm p-5 flex items-center gap-4">
             <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
               style={{ background: 'rgba(201,168,76,0.12)', border: '1px solid rgba(201,168,76,0.3)' }}>
-              <Icon name="MessageCircle" size={18} style={{ color: 'var(--gold)' }} />
+              <Icon name="Smartphone" size={18} style={{ color: 'var(--gold)' }} />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'var(--text-muted)' }}>WhatsApp (Макс)</div>
+              <div className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'var(--text-muted)' }}>МАКС (соцсеть)</div>
               <div className="text-sm font-medium" style={{ color: 'var(--text-main)' }}>+7 906 434-79-78</div>
             </div>
-          </a>
+          </div>
 
           {/* Instagram */}
           <div className="glass-card rounded-sm p-5 flex items-center gap-4">
