@@ -1,6 +1,78 @@
 import { useState, useEffect, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 
+const NAV_LINKS = [
+  { label: 'Сценарии', href: '#scenarios' },
+  { label: 'Что такое Перепрошивка?', href: '#what-is' },
+  { label: 'Как проходит тренинг', href: '#how-it-goes' },
+  { label: 'Автор тренинга', href: '#author' },
+  { label: 'Ведущая тренинга', href: '#trainer' },
+  { label: 'Кейсы и отзывы', href: '#cases' },
+  { label: 'Для кого', href: '#for-whom' },
+  { label: 'Тарифы', href: '#prices' },
+  { label: 'Вопросы и ответы', href: '#faq' },
+  { label: 'Контакты', href: '#contacts' },
+];
+
+const Navbar = () => {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 30);
+    window.addEventListener('scroll', handler);
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
+  const handleClick = (href: string) => {
+    setOpen(false);
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+  return (
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-2' : 'py-3'}`}
+      style={{ background: scrolled ? 'rgba(10,8,6,0.97)' : 'rgba(10,8,6,0.85)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(201,168,76,0.1)' }}>
+      <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
+        <div className="font-display text-lg font-bold text-gold-gradient tracking-widest flex-shrink-0">ПЕРЕПРОШИВКА</div>
+        {/* Desktop */}
+        <div className="hidden xl:flex items-center gap-1 flex-wrap">
+          {NAV_LINKS.map(l => (
+            <button key={l.href} onClick={() => handleClick(l.href)}
+              className="text-xs px-2 py-1.5 rounded transition-colors hover:text-yellow-400 whitespace-nowrap"
+              style={{ color: 'var(--text-muted)' }}>
+              {l.label}
+            </button>
+          ))}
+        </div>
+        <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer"
+          className="hidden xl:flex btn-gold items-center gap-1.5 rounded-sm px-4 py-2 text-xs font-bold flex-shrink-0">
+          Забронировать участие
+        </a>
+        {/* Burger */}
+        <button className="xl:hidden flex flex-col gap-1.5 p-2" onClick={() => setOpen(v => !v)}>
+          <span className={`block w-6 h-0.5 transition-all duration-300 ${open ? 'rotate-45 translate-y-2' : ''}`} style={{ background: 'var(--gold)' }} />
+          <span className={`block w-6 h-0.5 transition-all duration-300 ${open ? 'opacity-0' : ''}`} style={{ background: 'var(--gold)' }} />
+          <span className={`block w-6 h-0.5 transition-all duration-300 ${open ? '-rotate-45 -translate-y-2' : ''}`} style={{ background: 'var(--gold)' }} />
+        </button>
+      </div>
+      {/* Mobile menu */}
+      {open && (
+        <div className="xl:hidden border-t px-4 py-4 space-y-1" style={{ background: 'rgba(10,8,6,0.98)', borderColor: 'rgba(201,168,76,0.15)' }}>
+          {NAV_LINKS.map(l => (
+            <button key={l.href} onClick={() => handleClick(l.href)}
+              className="block w-full text-left text-sm px-3 py-2.5 rounded transition-colors hover:text-yellow-400"
+              style={{ color: 'var(--text-muted)' }}>
+              {l.label}
+            </button>
+          ))}
+          <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer"
+            className="btn-gold flex items-center justify-center gap-2 rounded-sm px-4 py-3 text-sm font-bold mt-2 w-full">
+            Забронировать участие
+          </a>
+        </div>
+      )}
+    </nav>
+  );
+};
+
 const TELEGRAM_URL = 'https://t.me/volshebnitsaa';
 const OKSANA_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/81ae1fdf-b495-4941-8cc8-cb6cfffc52fd.jpg';
 const OKSANA_PHOTO2 = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/609137d0-31bb-43b3-a22e-7f346f04a330.jpg';
@@ -67,7 +139,7 @@ const SectionHeader = ({ eyebrow, title, subtitle }: { eyebrow?: string; title: 
   return (
     <div ref={ref} className={`text-center mb-10 sm:mb-16 transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
       {eyebrow && (
-        <div className="text-[10px] sm:text-xs uppercase tracking-[0.25em] sm:tracking-[0.3em] mb-3 sm:mb-4 font-semibold" style={{ color: 'var(--gold)' }}>{eyebrow}</div>
+        <div className="text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.25em] mb-3 sm:mb-4 font-semibold" style={{ color: 'var(--gold)' }}>{eyebrow}</div>
       )}
       <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 sm:mb-5 px-2" style={{ color: 'var(--text-main)' }}>
         {title}
@@ -84,7 +156,7 @@ const SectionHeader = ({ eyebrow, title, subtitle }: { eyebrow?: string; title: 
 const HeroSection = () => {
   const time = useCountdown(TARGET_DATE);
   return (
-    <section className="hero-gradient min-h-screen flex items-center relative overflow-hidden noise-overlay">
+    <section className="hero-gradient min-h-screen flex items-center relative overflow-hidden noise-overlay pt-16">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-1/2 h-full opacity-10"
           style={{ background: 'radial-gradient(ellipse at right top, rgba(155,28,28,0.6), transparent 70%)' }} />
@@ -100,14 +172,15 @@ const HeroSection = () => {
               <div className="absolute -inset-3 rounded-sm opacity-20"
                 style={{ background: 'linear-gradient(135deg, var(--gold) 0%, transparent 60%)' }} />
               <img
-                src={OKSANA_PHOTO}
+                src={OKSANA_PHOTO2}
                 alt="Оксана Панасенко — ведущая тренинга Перепрошивка"
                 className="relative w-full rounded-sm object-cover object-top"
                 style={{ aspectRatio: '3/4', filter: 'contrast(1.05) saturate(0.9)' }}
               />
-              <div className="absolute bottom-4 left-4 right-4 glass-card rounded-sm p-3">
-                <div className="font-display text-lg sm:text-xl" style={{ color: 'var(--gold)' }}>Оксана Панасенко</div>
-                <div className="text-xs sm:text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Сертифицированный тренер · Энергокоуч</div>
+              <div className="absolute bottom-4 left-4 right-4 rounded-sm p-3"
+                style={{ background: 'rgba(10,8,6,0.82)', backdropFilter: 'blur(8px)', border: '1px solid rgba(201,168,76,0.3)' }}>
+                <div className="font-display text-lg sm:text-xl font-bold" style={{ color: '#fff' }}>Оксана Панасенко</div>
+                <div className="text-xs sm:text-sm mt-1 font-medium" style={{ color: 'var(--gold)' }}>Сертифицированный тренер · Энергопрактик</div>
               </div>
             </div>
           </div>
@@ -315,7 +388,7 @@ const ResultCard = ({ before, after, icon, delay }: { before: string; after: str
   return (
     <div ref={ref} className={`before-after-card rounded-sm p-5 text-center transition-all duration-700 ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
       style={{ transitionDelay: `${delay}ms` }}>
-      <div className="text-2xl mb-3">{icon}</div>
+      <Icon name={icon} size={28} className="mx-auto mb-3" style={{ color: 'var(--gold)' }} />
       <div className="text-sm mb-2 line-through" style={{ color: 'var(--crimson-bright)', opacity: 0.7 }}>{before}</div>
       <div className="w-6 h-px mx-auto mb-2" style={{ background: 'var(--gold)' }} />
       <div className="text-sm font-semibold" style={{ color: 'var(--gold)' }}>{after}</div>
@@ -361,21 +434,21 @@ const WhatIsSection = () => {
     <section className="py-16 sm:py-28" style={{ background: 'var(--dark-bg)' }}>
       <div className="container mx-auto px-4 sm:px-6">
         <SectionHeader
-          eyebrow="Что такое Перепрошивка"
+          eyebrow="Что такое Перепрошивка?"
           title="Не лекция. Не теория. Живой опыт."
           subtitle="Практический трансформационный тренинг, где изменения происходят через тело, эмоции и осознанность — не через знания."
         />
 
         <div className="grid md:grid-cols-3 gap-4 mb-8 max-w-3xl mx-auto">
           {[
-            { icon: '🫀', label: 'Через тело' },
-            { icon: '💧', label: 'Через эмоции' },
-            { icon: '✨', label: 'Через осознание' },
-            { icon: '🌊', label: 'Через состояние' },
-            { icon: '⚡', label: 'Через действие' },
+            { icon: 'Activity', label: 'Через тело' },
+            { icon: 'Droplets', label: 'Через эмоции' },
+            { icon: 'Eye', label: 'Через осознание' },
+            { icon: 'Waves', label: 'Через состояние' },
+            { icon: 'Zap', label: 'Через действие' },
           ].map(({ icon, label }) => (
             <div key={label} className="glass-card rounded-sm p-5 flex items-center gap-4">
-              <span className="text-3xl">{icon}</span>
+              <Icon name={icon} size={28} style={{ color: 'var(--gold)', flexShrink: 0 }} />
               <span className="font-medium" style={{ color: 'var(--text-main)' }}>{label}</span>
             </div>
           ))}
@@ -383,7 +456,7 @@ const WhatIsSection = () => {
 
         <div className="mt-20">
           <div className="text-center mb-12">
-            <div className="text-xs uppercase tracking-[0.3em] font-semibold" style={{ color: 'var(--gold)' }}>Как проходит Перепрошивка</div>
+            <div className="text-xs uppercase tracking-[0.3em] font-semibold" style={{ color: 'var(--gold)' }}>Как проходит Перепрошивка?</div>
             <h3 className="font-display text-3xl md:text-4xl font-light mt-3" style={{ color: 'var(--text-main)' }}>6 шагов трансформации</h3>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -398,19 +471,19 @@ const WhatIsSection = () => {
 // Block 6: Why it works
 const WhyWorksSection = () => {
   const chain = [
-    { label: 'Тело', icon: '🫀' },
-    { label: 'Эмоции', icon: '💧' },
-    { label: 'Состояние', icon: '✨' },
-    { label: 'Мышление', icon: '🧠' },
-    { label: 'Действия', icon: '⚡' },
-    { label: 'Результат', icon: '🌟' },
+    { label: 'Тело', icon: 'Activity' },
+    { label: 'Эмоции', icon: 'Droplets' },
+    { label: 'Состояние', icon: 'Sparkles' },
+    { label: 'Мышление', icon: 'Brain' },
+    { label: 'Действия', icon: 'Zap' },
+    { label: 'Результат', icon: 'Star' },
   ];
   const { ref, inView } = useInView();
   return (
     <section className="py-16 sm:py-28" style={{ background: 'var(--dark-card)' }}>
       <div className="container mx-auto px-4 sm:px-6">
         <SectionHeader
-          eyebrow="Почему метод работает"
+          eyebrow="Почему метод работает?"
           title="Изменения начинаются не в голове"
           subtitle="Традиционные методы работают с мыслями. Перепрошивка начинается с тела и состояния — там, где живут настоящие ограничения."
         />
@@ -424,7 +497,7 @@ const WhyWorksSection = () => {
                 className="flex flex-col items-center gap-2 glass-card rounded-sm px-5 py-5 transition-all duration-500"
                 style={{ transitionDelay: `${i * 100}ms`, minWidth: 100 }}
               >
-                <span className="text-2xl">{item.icon}</span>
+                <Icon name={item.icon} size={24} style={{ color: 'var(--gold)' }} />
                 <span className="font-semibold text-sm" style={{ color: 'var(--text-main)' }}>{item.label}</span>
               </div>
               {i < chain.length - 1 && (
@@ -446,16 +519,16 @@ const WhyWorksSection = () => {
 // Block 7: Before → After
 const ResultsSection = () => {
   const results = [
-    { before: 'Страх', after: 'Уверенность', icon: '🦋' },
-    { before: 'Тревога', after: 'Спокойствие', icon: '🌊' },
-    { before: 'Хаос', after: 'Ясность', icon: '✨' },
-    { before: 'Усталость', after: 'Энергия', icon: '⚡' },
-    { before: 'Сомнения', after: 'Действия', icon: '🚀' },
-    { before: 'Обиды', after: 'Принятие', icon: '🌸' },
-    { before: 'Пустота', after: 'Наполненность', icon: '💫' },
-    { before: 'Зависимость', after: 'Свобода', icon: '🕊️' },
-    { before: 'Злость', after: 'Сила', icon: '🔥' },
-    { before: 'Закрытость', after: 'Открытость', icon: '💝' },
+    { before: 'Страх', after: 'Уверенность', icon: 'ShieldCheck' },
+    { before: 'Тревога', after: 'Спокойствие', icon: 'Waves' },
+    { before: 'Хаос', after: 'Ясность', icon: 'Sparkles' },
+    { before: 'Усталость', after: 'Энергия', icon: 'Zap' },
+    { before: 'Сомнения', after: 'Действия', icon: 'ArrowUpRight' },
+    { before: 'Обиды', after: 'Принятие', icon: 'HeartHandshake' },
+    { before: 'Пустота', after: 'Наполненность', icon: 'Sun' },
+    { before: 'Зависимость', after: 'Свобода', icon: 'Wind' },
+    { before: 'Злость', after: 'Сила', icon: 'Flame' },
+    { before: 'Закрытость', after: 'Открытость', icon: 'Unlock' },
   ];
   return (
     <section className="py-16 sm:py-28" style={{ background: 'var(--dark-bg)' }}>
@@ -475,21 +548,27 @@ const ResultsSection = () => {
 
 // Block 8: Emotional quote
 const EmotionalSection = () => (
-  <section className="py-16 sm:py-28 relative overflow-hidden" style={{ background: 'var(--crimson)' }}>
+  <section className="py-16 sm:py-28 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #b8902a 0%, #c9a84c 40%, #a07820 100%)' }}>
     <div className="absolute inset-0 opacity-20"
-      style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.8), transparent)' }} />
+      style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.6), transparent)' }} />
     <div className="container mx-auto px-4 sm:px-6 relative z-10 text-center">
-      <div className="font-display text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight max-w-4xl mx-auto" style={{ color: 'var(--text-main)' }}>
+      <div className="font-display text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight max-w-4xl mx-auto" style={{ color: '#0a0806' }}>
         Перепрошивку невозможно понять.
         <br />
-        <span style={{ opacity: 0.8 }}>Её можно только</span>{' '}
+        <span style={{ opacity: 0.75 }}>Её можно только</span>{' '}
         <span className="italic">прожить.</span>
       </div>
       <div className="mt-8 sm:mt-12">
-        <CTAButton size="large" className="w-full sm:w-auto justify-center">
+        <a
+          href={TELEGRAM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-sm font-semibold tracking-wide transition-all duration-300 px-10 py-5 text-lg w-full sm:w-auto justify-center"
+          style={{ background: 'var(--crimson)', color: '#fff' }}
+        >
           Хочу прожить это
           <Icon name="Heart" size={20} />
-        </CTAButton>
+        </a>
       </div>
     </div>
   </section>
@@ -560,7 +639,14 @@ const AboutSection = () => (
           </h2>
           <div className="section-divider mb-6" style={{ marginLeft: 0 }} />
           <div className="flex flex-wrap gap-2 mb-6">
-            {['Сертифицированный тренер', 'Энергокоуч', 'Автор практик', 'Инструктор практики ШОДХАН'].map(tag => (
+            {[
+              'Сертифицированный тренер',
+              'Мастер телесной терапии',
+              'Натуропат',
+              'Автор практик и программ по развитию личности',
+              'Инструктор Шодхан',
+              'Рекордсмен Книги Рекордов Гиннеса',
+            ].map(tag => (
               <span key={tag} className="text-xs px-3 py-1 rounded-sm"
                 style={{ background: 'rgba(201,168,76,0.1)', border: '1px solid rgba(201,168,76,0.25)', color: 'var(--gold)' }}>
                 {tag}
@@ -569,15 +655,15 @@ const AboutSection = () => (
           </div>
           <div className="space-y-4 text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
             <p>Оксана прошла путь глубокой личной трансформации и стала сертифицированным тренером метода Дмитрия Хара.</p>
-            <p>Она ведёт практику ШОДХАН и авторские энергетические практики, <span style={{ color: 'var(--text-main)' }}>помогая людям находить ресурс там, где они перестали его искать.</span></p>
-            <p>Тренинг в Краснодаре — это живое пространство трансформации, которое Оксана создаёт для каждого участника.</p>
+            <p>Также она ведёт практику ШОДХАН и другие телесно-эмоциональные процессы, <span style={{ color: 'var(--text-main)' }}>помогая людям находить ресурс там, где они перестали его искать.</span></p>
+            <p>Этот тренинг — это живое пространство трансформации, которое Оксана создаёт для каждого участника.</p>
           </div>
           <div className="grid grid-cols-2 gap-4 mt-8">
             {[
               { num: '500+', label: 'участников' },
               { num: '3+', label: 'года практики' },
               { num: '50+', label: 'групп' },
-              { num: '4', label: 'авторские практики' },
+              { num: '6', label: 'авторских практик' },
             ].map(({ num, label }) => (
               <div key={label} className="glass-card rounded-sm p-5 text-center">
                 <div className="font-display text-4xl font-bold text-gold-gradient">{num}</div>
@@ -590,6 +676,64 @@ const AboutSection = () => (
     </div>
   </section>
 );
+
+const RUTUBE_REELS = [
+  { id: '37e49f403c08f385fa59ef1c4ad7e7de', thumb: 'https://rutube.ru/api/video/37e49f403c08f385fa59ef1c4ad7e7de/thumbnail/' },
+  { id: 'fbb8d0c1592243fd2ae3b2e7235647ae', thumb: 'https://rutube.ru/api/video/fbb8d0c1592243fd2ae3b2e7235647ae/thumbnail/' },
+];
+
+const ReelsSection = () => (
+  <section className="py-16 sm:py-20" style={{ background: 'var(--dark-bg)' }}>
+    <div className="container mx-auto px-4 sm:px-6">
+      <div className="text-center mb-10">
+        <div className="text-xs uppercase tracking-[0.25em] font-semibold mb-3" style={{ color: 'var(--gold)' }}>Атмосфера тренинга</div>
+        <h3 className="font-display text-2xl md:text-3xl font-light" style={{ color: 'var(--text-main)' }}>Почувствуй, как это бывает</h3>
+      </div>
+      <div className="flex justify-center gap-4 sm:gap-8">
+        {RUTUBE_REELS.map(v => (
+          <div key={v.id} className="w-full max-w-[260px]">
+            <VideoReviewCard id={v.id} thumb={v.thumb} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const RUTUBE_REVIEWS = [
+  { id: '8ebf651a2a02efc2fe365e0e39c3acd1', thumb: 'https://rutube.ru/api/video/8ebf651a2a02efc2fe365e0e39c3acd1/thumbnail/' },
+  { id: '6716da385323f48fe40630ef02138961', thumb: 'https://rutube.ru/api/video/6716da385323f48fe40630ef02138961/thumbnail/' },
+  { id: '22bcabce7d9f0982bccf900ae4f8798f', thumb: 'https://rutube.ru/api/video/22bcabce7d9f0982bccf900ae4f8798f/thumbnail/' },
+  { id: '1a5adfb2b80d05c7f37d79230f295789', thumb: 'https://rutube.ru/api/video/1a5adfb2b80d05c7f37d79230f295789/thumbnail/' },
+];
+
+const VideoReviewCard = ({ id, thumb }: { id: string; thumb: string }) => {
+  const [playing, setPlaying] = useState(false);
+  return (
+    <div className="glass-card rounded-sm overflow-hidden" style={{ aspectRatio: '9/16' }}>
+      {playing ? (
+        <iframe
+          src={`https://rutube.ru/play/embed/${id}?autoplay=1`}
+          width="100%" height="100%"
+          allow="autoplay; fullscreen"
+          allowFullScreen
+          style={{ border: 'none', display: 'block', width: '100%', height: '100%' }}
+        />
+      ) : (
+        <button className="relative w-full h-full group" onClick={() => setPlaying(true)}>
+          <img src={thumb} alt="Видеоотзыв" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 flex items-center justify-center"
+            style={{ background: 'rgba(10,8,6,0.45)' }}>
+            <div className="w-16 h-16 rounded-full flex items-center justify-center transition-transform group-hover:scale-110"
+              style={{ background: 'rgba(201,168,76,0.9)' }}>
+              <Icon name="Play" size={28} style={{ color: '#0a0806', marginLeft: 3 }} />
+            </div>
+          </div>
+        </button>
+      )}
+    </div>
+  );
+};
 
 // Block 10: Cases
 const CasesSection = () => {
@@ -634,9 +778,16 @@ const CasesSection = () => {
   return (
     <section className="py-16 sm:py-28" style={{ background: 'var(--dark-card)' }}>
       <div className="container mx-auto px-4 sm:px-6">
-        <SectionHeader eyebrow="Кейсы участников" title="Реальные истории изменений" />
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <SectionHeader eyebrow="Кейсы и отзывы участников" title="Реальные истории изменений" />
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {cases.map((c, i) => <CaseCard key={c.name} name={c.name} before={c.before} insight={c.insight} after={c.after} delay={i * 80} />)}
+        </div>
+        <div className="text-center mb-10">
+          <div className="text-xs uppercase tracking-[0.25em] font-semibold mb-3" style={{ color: 'var(--gold)' }}>Видеоотзывы</div>
+          <h3 className="font-display text-2xl md:text-3xl font-light" style={{ color: 'var(--text-main)' }}>Участники говорят сами</h3>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          {RUTUBE_REVIEWS.map(v => <VideoReviewCard key={v.id} id={v.id} thumb={v.thumb} />)}
         </div>
       </div>
     </section>
@@ -852,6 +1003,107 @@ const FAQSection = () => {
   );
 };
 
+// Block: Contacts
+const ContactsSection = () => (
+  <section id="contacts" className="py-16 sm:py-24" style={{ background: 'var(--dark-card)' }}>
+    <div className="container mx-auto px-4 sm:px-6">
+      <SectionHeader
+        eyebrow="Контакты"
+        title="Остались вопросы?"
+        subtitle="Если вы не нашли ответ на свой вопрос, задайте его напрямую тренеру"
+      />
+      <div className="max-w-2xl mx-auto">
+        {/* Phone */}
+        <div className="glass-card rounded-sm p-6 mb-6 flex items-center gap-5">
+          <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+            style={{ background: 'rgba(201,168,76,0.12)', border: '1px solid rgba(201,168,76,0.3)' }}>
+            <Icon name="Phone" size={22} style={{ color: 'var(--gold)' }} />
+          </div>
+          <div>
+            <div className="text-xs uppercase tracking-[0.2em] mb-1 font-semibold" style={{ color: 'var(--text-muted)' }}>Телефон</div>
+            <a href="tel:+79615918581" className="font-display text-xl font-bold hover:opacity-80 transition-opacity" style={{ color: 'var(--text-main)' }}>
+              +7 961 591-85-81
+            </a>
+          </div>
+        </div>
+
+        {/* Messengers */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          {/* Telegram Оксана */}
+          <a href="https://t.me/volshebnitsaa" target="_blank" rel="noopener noreferrer"
+            className="glass-card rounded-sm p-5 flex items-center gap-4 hover:opacity-80 transition-opacity">
+            <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{ background: 'rgba(201,168,76,0.12)', border: '1px solid rgba(201,168,76,0.3)' }}>
+              <Icon name="Send" size={18} style={{ color: 'var(--gold)' }} />
+            </div>
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'var(--text-muted)' }}>Telegram</div>
+              <div className="text-sm font-medium" style={{ color: 'var(--text-main)' }}>@volshebnitsaa</div>
+            </div>
+          </a>
+
+          {/* WhatsApp Оксана */}
+          <a href="https://wa.me/79615918581" target="_blank" rel="noopener noreferrer"
+            className="glass-card rounded-sm p-5 flex items-center gap-4 hover:opacity-80 transition-opacity">
+            <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{ background: 'rgba(201,168,76,0.12)', border: '1px solid rgba(201,168,76,0.3)' }}>
+              <Icon name="MessageCircle" size={18} style={{ color: 'var(--gold)' }} />
+            </div>
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'var(--text-muted)' }}>WhatsApp</div>
+              <div className="text-sm font-medium" style={{ color: 'var(--text-main)' }}>+7 961 591-85-81</div>
+            </div>
+          </a>
+
+          {/* WhatsApp Макс */}
+          <a href="https://wa.me/79064347978" target="_blank" rel="noopener noreferrer"
+            className="glass-card rounded-sm p-5 flex items-center gap-4 hover:opacity-80 transition-opacity">
+            <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{ background: 'rgba(201,168,76,0.12)', border: '1px solid rgba(201,168,76,0.3)' }}>
+              <Icon name="MessageCircle" size={18} style={{ color: 'var(--gold)' }} />
+            </div>
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'var(--text-muted)' }}>WhatsApp (Макс)</div>
+              <div className="text-sm font-medium" style={{ color: 'var(--text-main)' }}>+7 906 434-79-78</div>
+            </div>
+          </a>
+
+          {/* Instagram */}
+          <div className="glass-card rounded-sm p-5 flex items-center gap-4">
+            <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{ background: 'rgba(201,168,76,0.12)', border: '1px solid rgba(201,168,76,0.3)' }}>
+              <Icon name="Instagram" size={18} style={{ color: 'var(--gold)' }} />
+            </div>
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'var(--text-muted)' }}>Instagram*</div>
+              <div className="text-sm font-medium" style={{ color: 'var(--text-main)' }}>@volshebnitsa_krd</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Telegram group */}
+        <a href="https://t.me/telopraktiki_krd" target="_blank" rel="noopener noreferrer"
+          className="glass-card rounded-sm p-5 flex items-center justify-between gap-4 hover:opacity-80 transition-opacity w-full">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{ background: 'rgba(201,168,76,0.12)', border: '1px solid rgba(201,168,76,0.3)' }}>
+              <Icon name="Users" size={18} style={{ color: 'var(--gold)' }} />
+            </div>
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'var(--text-muted)' }}>Telegram-группа</div>
+              <div className="text-sm font-medium" style={{ color: 'var(--text-main)' }}>Телесно-эмоциональные практики</div>
+            </div>
+          </div>
+          <span className="text-xs px-3 py-1.5 rounded-sm font-semibold flex-shrink-0"
+            style={{ background: 'rgba(201,168,76,0.15)', border: '1px solid rgba(201,168,76,0.3)', color: 'var(--gold)' }}>
+            Подробнее
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+);
+
 // Block 15: Final CTA
 const FinalSection = () => {
   const time = useCountdown(TARGET_DATE);
@@ -909,10 +1161,34 @@ const FinalSection = () => {
 
 // Footer
 const Footer = () => (
-  <footer className="py-10" style={{ background: 'var(--dark-card)', borderTop: '1px solid rgba(201,168,76,0.1)' }}>
-    <div className="container mx-auto px-6 text-center">
-      <div className="font-display text-2xl text-gold-gradient mb-2">ПЕРЕПРОШИВКА</div>
-      <p className="text-xs" style={{ color: 'var(--text-muted)' }}>© 2026 Оксана Панасенко · Трансформационный тренинг</p>
+  <footer className="py-12" style={{ background: 'var(--dark-card)', borderTop: '1px solid rgba(201,168,76,0.1)' }}>
+    <div className="container mx-auto px-6">
+      <div className="text-center mb-8">
+        <div className="font-display text-2xl text-gold-gradient mb-1">ПЕРЕПРОШИВКА</div>
+        <p className="text-xs" style={{ color: 'var(--text-muted)' }}>© 2026 Оксана Панасенко · Трансформационный тренинг</p>
+      </div>
+
+      {/* Disclaimer */}
+      <div className="max-w-3xl mx-auto rounded-sm p-5 mb-6 text-xs leading-relaxed space-y-3"
+        style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', color: 'var(--text-muted)' }}>
+        <p>❗ Все мероприятия и практики не являются медицинскими, психотерапевтическими или эзотерическими услугами.</p>
+        <p>Мы используем методы, основанные на телесной работе, дыхании, движении, фокусе внимания и коммуникации, направленные на развитие навыков саморегуляции и осознанности.</p>
+        <p>
+          Участие осуществляется по{' '}
+          <a href="/dogovor-oferta.pdf" target="_blank" rel="noopener noreferrer"
+            className="underline hover:opacity-80 transition-opacity" style={{ color: 'var(--gold)' }}>
+            договору-оферте
+          </a>
+          , при наличии полного согласия с условиями участия и противопоказаниями.
+        </p>
+        <p>*Компания Meta Platforms Inc., владеющая социальными сетями Facebook и Instagram, по решению суда от 21.03.2022 признана экстремистской организацией, ее деятельность на территории России запрещена.</p>
+      </div>
+
+      {/* Legal */}
+      <div className="text-center text-xs space-y-1" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>
+        <p>ИП Панасенко Оксана Сергеевна</p>
+        <p>ИНН 231123507319 · ОГРН 325237500096091</p>
+      </div>
     </div>
   </footer>
 );
@@ -981,20 +1257,23 @@ const LocationSection = () => (
 export default function Index() {
   return (
     <div className="min-h-screen" style={{ fontFamily: 'Montserrat, sans-serif', background: 'var(--dark-bg)' }}>
-      <HeroSection />
+      <Navbar />
+      <div id="hero"><HeroSection /></div>
       <PainSection />
-      <ScenariosSection />
-      <WhatIsSection />
-      <WhyWorksSection />
+      <div id="scenarios"><ScenariosSection /></div>
+      <div id="what-is"><WhatIsSection /></div>
+      <div id="how-it-goes"><WhyWorksSection /></div>
       <ResultsSection />
       <EmotionalSection />
-      <AboutDmitrySection />
-      <AboutSection />
-      <CasesSection />
-      <ForWhomSection />
+      <div id="author"><AboutDmitrySection /></div>
+      <div id="trainer"><AboutSection /></div>
+      <div id="cases"><CasesSection /></div>
+      <div id="for-whom"><ForWhomSection /></div>
+      <ReelsSection />
       <LocationSection />
-      <PriceSection />
-      <FAQSection />
+      <div id="prices"><PriceSection /></div>
+      <div id="faq"><FAQSection /></div>
+      <ContactsSection />
       <FinalSection />
       <Footer />
       <StickyCTA />
