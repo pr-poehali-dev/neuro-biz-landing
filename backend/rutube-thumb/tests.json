@@ -1,0 +1,12 @@
+{
+  "tests": [
+    {
+      "name": "Get thumbnail for known video",
+      "method": "GET",
+      "path": "/?id=8ebf651a2a02efc2fe365e0e39c3acd1",
+      "expectedStatus": 200,
+      "expectedBody": {"thumbnail_url": "string"},
+      "bodyMatcher": "partial"
+    }
+  ]
+}

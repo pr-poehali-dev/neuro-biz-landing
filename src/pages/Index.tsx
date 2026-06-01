@@ -71,7 +71,7 @@ const Navbar = () => {
 
 const TELEGRAM_URL = 'https://t.me/volshebnitsaa';
 const OKSANA_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/a706df3c-0cc6-4e6a-b94a-9a103b85b4e7.jpg';
-const OKSANA_PHOTO2 = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/89d43649-e02d-4a5c-b6a4-75108ef3f1e4.png';
+const OKSANA_PHOTO2 = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/aac47414-3502-48fb-a7c5-f1a17468bd75.jpg';
 const DMITRY_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/435e1dd3-09d5-45c3-9cb7-abf60ed0f892.JPG';
 
 // Target date: June 4, 2026
@@ -703,8 +703,19 @@ const RUTUBE_REVIEWS = [
   { id: '1a5adfb2b80d05c7f37d79230f295789' },
 ];
 
+const RUTUBE_THUMB_URL = 'https://functions.poehali.dev/b643f0a1-0f83-49a3-9e94-f49ef9e12174';
+
 const VideoReviewCard = ({ id }: { id: string }) => {
   const [playing, setPlaying] = useState(false);
+  const [thumb, setThumb] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch(`${RUTUBE_THUMB_URL}?id=${id}`)
+      .then(r => r.json())
+      .then(d => { if (d.thumbnail_url) setThumb(d.thumbnail_url); })
+      .catch(() => {});
+  }, [id]);
+
   return (
     <div className="rounded-sm overflow-hidden" style={{ aspectRatio: '9/16', background: 'var(--dark-card)', border: '1px solid rgba(201,168,76,0.15)' }}>
       {playing ? (
@@ -716,12 +727,19 @@ const VideoReviewCard = ({ id }: { id: string }) => {
           style={{ border: 'none', display: 'block', width: '100%', height: '100%' }}
         />
       ) : (
-        <button className="relative w-full h-full group flex flex-col items-center justify-center gap-4" onClick={() => setPlaying(true)}>
-          <div className="w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-            style={{ background: 'rgba(201,168,76,0.9)', boxShadow: '0 0 30px rgba(201,168,76,0.3)' }}>
-            <Icon name="Play" size={28} style={{ color: '#0a0806', marginLeft: 3 }} />
+        <button className="relative w-full h-full group" onClick={() => setPlaying(true)}>
+          {thumb ? (
+            <img src={thumb} alt="Видеоотзыв" className="w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full" style={{ background: 'var(--dark-card)' }} />
+          )}
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3"
+            style={{ background: 'rgba(10,8,6,0.35)' }}>
+            <div className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+              style={{ background: 'rgba(201,168,76,0.9)', boxShadow: '0 0 30px rgba(201,168,76,0.3)' }}>
+              <Icon name="Play" size={24} style={{ color: '#0a0806', marginLeft: 3 }} />
+            </div>
           </div>
-          <span className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'var(--text-muted)' }}>Смотреть отзыв</span>
         </button>
       )}
     </div>
