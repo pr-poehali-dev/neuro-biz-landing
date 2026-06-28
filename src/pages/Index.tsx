@@ -74,8 +74,20 @@ const OKSANA_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7
 const OKSANA_PHOTO2 = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/aac47414-3502-48fb-a7c5-f1a17468bd75.jpg';
 const DMITRY_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7f713b707ebd/bucket/435e1dd3-09d5-45c3-9cb7-abf60ed0f892.JPG';
 
-// Target date: June 4, 2026
-const TARGET_DATE = new Date('2026-06-04T16:00:00');
+// Target date: September 3, 2026
+const TARGET_DATE = new Date('2026-09-03T16:00:00');
+
+// Динамические цены по датам
+const getPricing = () => {
+  const now = new Date();
+  const jul1 = new Date('2026-07-01');
+  const aug1 = new Date('2026-08-01');
+  const sep1 = new Date('2026-09-01');
+  if (now < jul1) return { standard: '45 000', vip: '80 000', label: 'до 1 июля' };
+  if (now < aug1) return { standard: '50 000', vip: '90 000', label: 'до 1 августа' };
+  if (now < sep1) return { standard: '60 000', vip: '110 000', label: 'до 1 сентября' };
+  return { standard: '70 000', vip: '120 000', label: '1–3 сентября' };
+};
 
 function calcTimeLeft(target: Date) {
   const diff = target.getTime() - Date.now();
@@ -198,7 +210,7 @@ const HeroSection = () => {
 
             <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-6 text-xs sm:text-sm mb-6 sm:mb-10 animate-fade-in-up delay-300">
               {[
-                { icon: 'Calendar', text: '4–7 июня 2026' },
+                { icon: 'Calendar', text: '3–6 сентября 2026' },
                 { icon: 'MapPin', text: 'Краснодар' },
                 { icon: 'Home', text: 'Вилла Ра Хаус' },
                 { icon: 'Star', text: 'Выездной формат' },
@@ -856,7 +868,9 @@ const ForWhomSection = () => (
 );
 
 // Block 13: Price
-const PriceSection = () => (
+const PriceSection = () => {
+  const pricing = getPricing();
+  return (
   <section className="py-16 sm:py-28" style={{ background: 'var(--dark-card)' }}>
     <div className="container mx-auto px-4 sm:px-6">
       <SectionHeader eyebrow="Тарифы" title="Выберите свой формат участия" />
@@ -868,7 +882,7 @@ const PriceSection = () => (
           <div className="flex-1">
             <div className="text-xs uppercase tracking-[0.25em] mb-2 font-semibold" style={{ color: 'var(--gold)' }}>Отдельный билет</div>
             <h3 className="font-display text-2xl font-bold mb-2" style={{ color: 'var(--text-main)' }}>Мастер-класс «Привычка быть счастливым»</h3>
-            <p className="text-sm mb-3" style={{ color: 'var(--text-muted)' }}>4 июня 2026 · четверг · 16:00–21:00 · Краснодар</p>
+            <p className="text-sm mb-3" style={{ color: 'var(--text-muted)' }}>3 сентября 2026 · четверг · 16:00–21:00 · Краснодар</p>
             <div className="flex flex-wrap gap-x-6 gap-y-1">
               {[
                 'Как перестать злиться на близких',
@@ -888,14 +902,21 @@ const PriceSection = () => (
         </div>
       </div>
 
+      {/* Price schedule hint */}
+      <div className="max-w-5xl mx-auto mb-6 text-center">
+        <span className="text-xs px-4 py-2 rounded-sm inline-block" style={{ background: 'rgba(201,168,76,0.1)', color: 'var(--gold)', border: '1px solid rgba(201,168,76,0.25)' }}>
+          Текущий период: <strong>{pricing.label}</strong>
+        </span>
+      </div>
+
       {/* Main tariffs */}
       <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
         {/* Standard */}
         <div className="glass-card rounded-sm p-8 flex flex-col" style={{ border: '1px solid rgba(201,168,76,0.2)' }}>
           <div className="text-xs uppercase tracking-[0.25em] mb-3 font-semibold" style={{ color: 'var(--gold)' }}>Стандарт</div>
           <h3 className="font-display text-3xl font-bold mb-1" style={{ color: 'var(--text-main)' }}>Перепрошивка</h3>
-          <div className="text-sm mb-5" style={{ color: 'var(--text-muted)' }}>Выездной формат · 4 дня · 4–7 июня 2026</div>
-          <div className="font-display text-6xl font-bold text-gold-gradient mb-1">60 000 ₽</div>
+          <div className="text-sm mb-5" style={{ color: 'var(--text-muted)' }}>Выездной формат · 4 дня · 3–6 сентября 2026</div>
+          <div className="font-display text-6xl font-bold text-gold-gradient mb-1">{pricing.standard} ₽</div>
           <div className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
             Предоплата: <span style={{ color: 'var(--gold)' }}>10 000 ₽</span>
             <span className="ml-3 text-xs">· Питание и проживание +10 000 ₽</span>
@@ -927,8 +948,8 @@ const PriceSection = () => (
             style={{ background: 'var(--gold)', color: '#0A0A0A' }}>ВИП</div>
           <div className="text-xs uppercase tracking-[0.25em] mb-3 font-semibold" style={{ color: 'var(--gold)' }}>Максимум</div>
           <h3 className="font-display text-3xl font-bold mb-1" style={{ color: 'var(--text-main)' }}>Перепрошивка VIP</h3>
-          <div className="text-sm mb-5" style={{ color: 'var(--text-muted)' }}>Выездной формат · 4 дня · 4–7 июня 2026</div>
-          <div className="font-display text-6xl font-bold text-gold-gradient mb-1">100 000 ₽</div>
+          <div className="text-sm mb-5" style={{ color: 'var(--text-muted)' }}>Выездной формат · 4 дня · 3–6 сентября 2026</div>
+          <div className="font-display text-6xl font-bold text-gold-gradient mb-1">{pricing.vip} ₽</div>
           <div className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
             Предоплата: <span style={{ color: 'var(--gold)' }}>20 000 ₽</span>
             <span className="ml-3 text-xs">· Питание и проживание +10 000 ₽</span>
@@ -959,7 +980,8 @@ const PriceSection = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 // Block 14: FAQ
 const FAQSection = () => {
@@ -1135,7 +1157,7 @@ const FinalSection = () => {
 
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm mb-6 sm:mb-10">
             {[
-              { icon: 'Calendar', text: '4–7 июня 2026' },
+              { icon: 'Calendar', text: '3–6 сентября 2026' },
               { icon: 'MapPin', text: 'Краснодар' },
               { icon: 'Home', text: 'Вилла Ра Хаус' },
             ].map(({ icon, text }) => (
