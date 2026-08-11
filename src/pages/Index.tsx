@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Fragment } from 'react';
 import Icon from '@/components/ui/icon';
 
 const NAV_LINKS = [
@@ -78,17 +78,18 @@ const DMITRY_PHOTO = 'https://cdn.poehali.dev/projects/56a7f61f-7ee4-4360-8538-7
 const TARGET_DATE = new Date('2026-09-24T16:00:00');
 
 // Динамические цены по датам
+const aug1 = new Date('2026-08-01');
+const aug15 = new Date('2026-08-15');
+const sep1 = new Date('2026-09-01');
+const sep15 = new Date('2026-09-15');
+
 const getPricing = () => {
   const now = new Date();
-  const aug1 = new Date('2026-08-01');
-  const aug15 = new Date('2026-08-15');
-  const sep1 = new Date('2026-09-01');
-  const sep15 = new Date('2026-09-15');
-  if (now < aug1) return { standard: '45 000', vip: '80 000', label: 'до 1 августа' };
-  if (now < aug15) return { standard: '50 000', vip: '90 000', label: 'до 15 августа' };
-  if (now < sep1) return { standard: '55 000', vip: '100 000', label: 'до 1 сентября' };
-  if (now < sep15) return { standard: '60 000', vip: '110 000', label: 'до 15 сентября' };
-  return { standard: '70 000', vip: '120 000', label: '15–24 сентября' };
+  if (now < aug1) return { standard: '45 000', vip: '80 000', label: 'до 1 августа', nextDate: aug1, nextStandard: '50 000', nextVip: '90 000' };
+  if (now < aug15) return { standard: '50 000', vip: '90 000', label: 'до 15 августа', nextDate: aug15, nextStandard: '55 000', nextVip: '100 000' };
+  if (now < sep1) return { standard: '55 000', vip: '100 000', label: 'до 1 сентября', nextDate: sep1, nextStandard: '60 000', nextVip: '110 000' };
+  if (now < sep15) return { standard: '60 000', vip: '110 000', label: 'до 15 сентября', nextDate: sep15, nextStandard: '70 000', nextVip: '120 000' };
+  return { standard: '70 000', vip: '120 000', label: '15–24 сентября', nextDate: null, nextStandard: null, nextVip: null };
 };
 
 function calcTimeLeft(target: Date) {
@@ -872,6 +873,7 @@ const ForWhomSection = () => (
 // Block 13: Price
 const PriceSection = () => {
   const pricing = getPricing();
+  const time = useCountdown(pricing.nextDate || TARGET_DATE);
   return (
   <section className="py-16 sm:py-28" style={{ background: 'var(--dark-card)' }}>
     <div className="container mx-auto px-4 sm:px-6">
@@ -910,6 +912,39 @@ const PriceSection = () => {
           Текущий период: <strong>{pricing.label}</strong>
         </span>
       </div>
+
+      {/* Countdown to next price increase */}
+      {pricing.nextDate && (
+        <div className="max-w-5xl mx-auto mb-10">
+          <div className="rounded-sm p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8"
+            style={{ background: 'rgba(155,28,28,0.08)', border: '1px solid rgba(201,168,76,0.3)' }}>
+            <div className="flex items-center gap-2 text-center sm:text-left">
+              <Icon name="AlarmClock" size={20} style={{ color: 'var(--gold)' }} />
+              <span className="text-sm sm:text-base font-medium" style={{ color: 'var(--text-main)' }}>
+                До повышения цены до <span style={{ color: 'var(--gold)' }}>{pricing.nextStandard} ₽</span> / <span style={{ color: 'var(--gold)' }}>{pricing.nextVip} ₽</span> осталось:
+              </span>
+            </div>
+            <div className="flex items-center gap-2 sm:gap-3">
+              {[
+                { value: time.days, label: 'дней' },
+                { value: time.hours, label: 'часов' },
+                { value: time.minutes, label: 'минут' },
+                { value: time.seconds, label: 'секунд' },
+              ].map(({ value, label }, i) => (
+                <Fragment key={label}>
+                  {i > 0 && <span className="text-lg font-bold pb-3" style={{ color: 'var(--gold)' }}>:</span>}
+                  <div className="flex flex-col items-center">
+                    <div className="font-display text-2xl sm:text-3xl font-bold text-gold-gradient tabular-nums min-w-[36px] text-center">
+                      {String(value).padStart(2, '0')}
+                    </div>
+                    <div className="text-[9px] uppercase tracking-[0.1em] mt-0.5" style={{ color: 'var(--text-muted)' }}>{label}</div>
+                  </div>
+                </Fragment>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main tariffs */}
       <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
