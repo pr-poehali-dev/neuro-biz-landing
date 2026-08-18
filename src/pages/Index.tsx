@@ -1307,7 +1307,7 @@ const LocationSection = () => (
           {[
             { icon: 'MapPin', title: 'Адрес', text: 'Ст. Новодмитриевская, ул. Казачья, 3' },
             { icon: 'Waves', title: 'На территории', text: 'Сауна · Бассейн с подогревом' },
-            { icon: 'Calendar', title: 'Даты', text: '4–7 июня 2026 · 4 дня' },
+            { icon: 'Calendar', title: 'Даты', text: '24–27 сентября 2026 · 4 дня' },
           ].map(({ icon, title, text }) => (
             <div key={title} className="glass-card rounded-sm p-5 flex items-start gap-3">
               <Icon name={icon} size={20} className="flex-shrink-0 mt-0.5" style={{ color: 'var(--gold)' }} />
